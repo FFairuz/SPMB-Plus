@@ -2,6 +2,10 @@
 
 <?= $this->section('title'); ?>Dashboard Pendaftar<?= $this->endSection(); ?>
 
+<?= $this->section('styles'); ?>
+<link rel="stylesheet" href="/css/status-badges.css">
+<?= $this->endSection(); ?>
+
 <?= $this->section('content'); ?>
         <?php if (session()->getFlashdata('success')): ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -144,16 +148,21 @@
                             <div class="card-body">
                                 <small class="text-muted d-block mb-2">Status Pendaftaran</small>
                                 <div class="d-flex align-items-center gap-2">
-                                    <span class="badge badge-status status-<?= strtolower($applicant['status']); ?>">
-                                        <?php
-                                        $status_label = [
-                                            'pending' => 'Menunggu Verifikasi',
-                                            'verified' => 'Terverifikasi',
-                                            'accepted' => 'Diterima',
-                                            'rejected' => 'Ditolak',
-                                        ];
-                                        echo $status_label[$applicant['status']] ?? $applicant['status'];
-                                        ?>
+                                    <?php
+                                    $status = strtolower($applicant['status']);
+                                    $status_config = [
+                                        'draft' => ['label' => 'Draft', 'class' => 'status-draft', 'icon' => 'file-earmark'],
+                                        'pending' => ['label' => 'Menunggu Verifikasi', 'class' => 'status-draft', 'icon' => 'clock'],
+                                        'submitted' => ['label' => 'Disubmit', 'class' => 'status-submitted', 'icon' => 'send'],
+                                        'verified' => ['label' => 'Terverifikasi', 'class' => 'status-verified', 'icon' => 'check-circle'],
+                                        'accepted' => ['label' => 'Diterima', 'class' => 'status-accepted', 'icon' => 'check2-all'],
+                                        'rejected' => ['label' => 'Ditolak', 'class' => 'status-rejected', 'icon' => 'x-circle'],
+                                    ];
+                                    $config = $status_config[$status] ?? ['label' => ucfirst($status), 'class' => 'status-draft', 'icon' => 'question'];
+                                    ?>
+                                    <span class="status-badge <?= $config['class']; ?>" data-tooltip="Status: <?= $config['label']; ?>">
+                                        <i class="bi bi-<?= $config['icon']; ?>"></i>
+                                        <?= $config['label']; ?>
                                     </span>
                                 </div>
                             </div>

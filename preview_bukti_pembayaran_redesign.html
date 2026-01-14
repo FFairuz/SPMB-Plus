@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview Bukti Pembayaran SPMB - Desain Baru</title>
+    <style>
+        @page {
+            size: 210mm 148mm; /* A5 Landscape */
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 10pt;
+            line-height: 1.3;
+            padding: 20px;
+            background: #e9ecef;
+            width: 100%;
+            margin: 0;
+        }
+
+        .preview-container {
+            max-width: 210mm;
+            margin: 0 auto;
+            background: #fff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .receipt-container {
+            width: 210mm;
+            height: 148mm;
+            margin: 0;
+            background: white;
+            border: none;
+            padding: 6mm;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .receipt-header {
+            text-align: center;
+            border-bottom: 2px solid #000;
+            padding: 3mm 2mm;
+            background: #f9f9f9;
+            margin: 0;
+        }
+
+        .receipt-header h1 {
+            font-size: 13pt;
+            font-weight: bold;
+            margin: 0.5mm 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5pt;
+        }
+
+        .receipt-header h2 {
+            font-size: 11pt;
+            font-weight: bold;
+            margin: 0.8mm 0 0.5mm 0;
+            color: #c00;
+        }
+
+        .receipt-header h3 {
+            font-size: 9pt;
+            font-weight: normal;
+            margin: 0.3mm 0;
+        }
+
+        /* Body */
+        .receipt-body {
+            padding: 4mm 8mm;
+            flex: 1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+        }
+
+        /* Info Sections */
+        .info-section {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 2mm;
+            padding: 3mm 4mm;
+            margin-bottom: 3mm;
+        }
+
+        .section-title {
+            font-size: 9.5pt;
+            font-weight: bold;
+            color: #495057;
+            text-transform: uppercase;
+            margin-bottom: 2mm;
+            padding-bottom: 1mm;
+            border-bottom: 1px solid #dee2e6;
+            letter-spacing: 0.5pt;
+        }
+
+        .info-table {
+            width: 100%;
+        }
+
+        .info-table td {
+            padding: 1.2mm 0;
+            vertical-align: top;
+            font-size: 9pt;
+            line-height: 1.5;
+        }
+
+        .info-table .label {
+            width: 35%;
+            font-weight: normal;
+            color: #6c757d;
+            padding-right: 2mm;
+        }
+
+        .info-table .separator {
+            width: 2%;
+            text-align: center;
+            color: #6c757d;
+        }
+
+        .info-table .value {
+            width: 63%;
+            font-weight: 600;
+            color: #212529;
+        }
+
+        /* Payment Amount Box */
+        .payment-box {
+            border: 2px solid #000;
+            padding: 3mm;
+            margin: 4mm 0 3mm 0;
+            text-align: center;
+            background: #f9f9f9;
+        }
+
+        .payment-label {
+            font-size: 9pt;
+            margin-bottom: 1.5mm;
+            font-weight: bold;
+        }
+
+        .payment-amount {
+            font-size: 18pt;
+            font-weight: bold;
+            margin: 2mm 0;
+            color: #000;
+            letter-spacing: 1px;
+        }
+
+        .payment-words {
+            font-size: 8pt;
+            font-style: italic;
+            margin-top: 1.5mm;
+            padding: 1.5mm;
+            background: #fff;
+            border: 1px dashed #999;
+            line-height: 1.5;
+        }
+
+        /* Note */
+        .note {
+            font-size: 8pt;
+            margin: 2.5mm 0;
+            padding: 1.5mm 3mm;
+            background: #fffacd;
+            border-left: 3px solid #ffd700;
+            line-height: 1.4;
+        }
+
+        .note strong {
+            color: #c00;
+        }
+
+        /* Footer/Signature */
+        .signature-section {
+            margin-top: 3mm;
+            text-align: right;
+            padding-right: 8mm;
+        }
+
+        .signature-box {
+            display: inline-block;
+            text-align: center;
+            min-width: 45mm;
+        }
+
+        .signature-place {
+            margin-bottom: 1mm;
+            font-size: 9pt;
+        }
+
+        .signature-space {
+            height: 10mm;
+        }
+
+        .signature-name {
+            font-weight: bold;
+            text-decoration: underline;
+            font-size: 9pt;
+            margin-bottom: 0.5mm;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                padding: 0;
+                margin: 0;
+                width: 210mm;
+                height: 148mm;
+                background: white;
+            }
+
+            .preview-container {
+                box-shadow: none;
+            }
+
+            .receipt-container {
+                border: none;
+                width: 210mm;
+                height: 148mm;
+                margin: 0;
+                padding: 6mm;
+                page-break-after: avoid;
+                page-break-inside: avoid;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            @page {
+                size: 210mm 148mm landscape;
+                margin: 0;
+            }
+        }
+
+        /* Print Button */
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .print-button:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.5);
+        }
+
+        .info-badge {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 12px 20px;
+            background: #10b981;
+            color: white;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Info Badge -->
+    <div class="info-badge no-print">
+        ✨ Preview Desain Baru
+    </div>
+
+    <!-- Print Button -->
+    <button onclick="window.print()" class="print-button no-print">
+        🖨️ Cetak Bukti
+    </button>
+
+    <div class="preview-container">
+        <div class="receipt-container">
+            <!-- Header -->
+            <div class="receipt-header">
+                <h1>BUKTI PEMBAYARAN SPMB</h1>
+                <h2>SMK MUHAMMADIYAH 1 JAKARTA</h2>
+                <h3>TAHUN AJARAN 2025 - 2026</h3>
+            </div>
+
+            <!-- Body -->
+            <div class="receipt-body">
+                <!-- Applicant Info Section -->
+                <div class="info-section">
+                    <div class="section-title">Data Calon Siswa</div>
+                    <table class="info-table">
+                        <tr>
+                            <td class="label">Nama Lengkap</td>
+                            <td class="separator">:</td>
+                            <td class="value">Ahmad Rizki Ramadhan</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Nomor Pendaftaran</td>
+                            <td class="separator">:</td>
+                            <td class="value">SPMB-2025-001</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Asal Sekolah</td>
+                            <td class="separator">:</td>
+                            <td class="value">SMP Negeri 1 Jakarta Selatan</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Jurusan yang Dipilih</td>
+                            <td class="separator">:</td>
+                            <td class="value">Teknik Komputer dan Jaringan (TKJ)</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- Payment Info Section -->
+                <div class="info-section">
+                    <div class="section-title">Informasi Pembayaran</div>
+                    <table class="info-table">
+                        <tr>
+                            <td class="label">Jenis Pembayaran</td>
+                            <td class="separator">:</td>
+                            <td class="value">Lunas</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Metode Pembayaran</td>
+                            <td class="separator">:</td>
+                            <td class="value">Transfer Bank - BCA</td>
+                        </tr>
+                        <tr>
+                            <td class="label">Tanggal Pembayaran</td>
+                            <td class="separator">:</td>
+                            <td class="value">15 Januari 2025</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- Payment Amount -->
+                <div class="payment-box">
+                    <div class="payment-label">Jumlah yang dibayarkan :</div>
+                    <div class="payment-amount">
+                        Rp. 5.000.000
+                    </div>
+                    <div class="payment-label">Terbilang</div>
+                    <div class="payment-words">
+                        " Lima Juta Rupiah "
+                    </div>
+                </div>
+
+                <!-- Note -->
+                <div class="note">
+                    <strong>Note :</strong> bukti pembayaran ini <strong>tidak boleh hilang</strong>.
+                </div>
+
+                <!-- Signature -->
+                <div class="signature-section">
+                    <div class="signature-box">
+                        <div class="signature-place">
+                            Jakarta, 15 Januari 2025
+                        </div>
+                        <div class="signature-space"></div>
+                        <div class="signature-name">
+                            Bendahara SPMB
+                        </div>
+                        <div style="margin-top: 0.5mm; font-size: 8.5pt;">Petugas</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Optional: Auto center the preview
+        window.onload = function() {
+            document.body.style.display = 'flex';
+            document.body.style.justifyContent = 'center';
+            document.body.style.alignItems = 'flex-start';
+            document.body.style.minHeight = '100vh';
+        };
+    </script>
+</body>
+</html>

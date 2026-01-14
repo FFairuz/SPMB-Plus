@@ -2,6 +2,10 @@
 
 <?= $this->section('title'); ?>Daftar Pendaftar<?= $this->endSection(); ?>
 
+<?= $this->section('styles'); ?>
+<link rel="stylesheet" href="/css/status-badges.css">
+<?= $this->endSection(); ?>
+
 <?= $this->section('content'); ?>
 
 <!-- Page Header -->
@@ -70,8 +74,8 @@
                 <table class="table table-hover align-middle mb-0">
                     <thead style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
                         <tr>
-                            <th class="py-3 px-4 fw-semibold">
-                                <i class="bi bi-hash text-primary me-1"></i> No. Registrasi
+                            <th class="py-3 px-4 fw-semibold text-center" style="width: 60px;">
+                                <i class="bi bi-hash text-primary me-1"></i> No
                             </th>
                             <th class="py-3 fw-semibold">
                                 <i class="bi bi-person text-primary me-1"></i> Nama Lengkap
@@ -89,11 +93,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($applicants as $applicant): ?>
+                        <?php foreach ($applicants as $index => $applicant): ?>
                             <tr class="border-bottom">
-                                <td class="px-4">
-                                    <span class="badge bg-light text-dark border" style="font-family: monospace;">
-                                        <?= $applicant['nomor_pendaftaran'] ?? 'N/A'; ?>
+                                <td class="px-4 text-center">
+                                    <span class="badge bg-light text-dark border fw-bold">
+                                        <?= $index + 1 ?>
                                     </span>
                                 </td>
                                 <td>
@@ -109,17 +113,18 @@
                                 <td>
                                     <?php
                                     $status_config = [
-                                        'pending' => ['label' => 'Menunggu', 'class' => 'bg-warning text-dark', 'icon' => 'clock'],
-                                        'submitted' => ['label' => 'Disubmit', 'class' => 'bg-info', 'icon' => 'send'],
-                                        'verified' => ['label' => 'Terverifikasi', 'class' => 'bg-primary', 'icon' => 'check-circle'],
-                                        'accepted' => ['label' => 'Diterima', 'class' => 'bg-success', 'icon' => 'check2-all'],
-                                        'rejected' => ['label' => 'Ditolak', 'class' => 'bg-danger', 'icon' => 'x-circle'],
+                                        'draft' => ['label' => 'Draft', 'class' => 'status-draft', 'icon' => 'file-earmark'],
+                                        'pending' => ['label' => 'Menunggu', 'class' => 'status-draft', 'icon' => 'clock'],
+                                        'submitted' => ['label' => 'Disubmit', 'class' => 'status-submitted', 'icon' => 'send'],
+                                        'verified' => ['label' => 'Terverifikasi', 'class' => 'status-verified', 'icon' => 'check-circle'],
+                                        'accepted' => ['label' => 'Diterima', 'class' => 'status-accepted', 'icon' => 'check2-all'],
+                                        'rejected' => ['label' => 'Ditolak', 'class' => 'status-rejected', 'icon' => 'x-circle'],
                                     ];
                                     $status = $applicant['status'];
-                                    $config = $status_config[$status] ?? ['label' => $status, 'class' => 'bg-secondary', 'icon' => 'question'];
+                                    $config = $status_config[$status] ?? ['label' => $status, 'class' => 'status-draft', 'icon' => 'question'];
                                     ?>
-                                    <span class="badge <?= $config['class']; ?> px-3 py-2">
-                                        <i class="bi bi-<?= $config['icon']; ?> me-1"></i>
+                                    <span class="status-badge <?= $config['class']; ?>" data-tooltip="Status: <?= $config['label']; ?>">
+                                        <i class="bi bi-<?= $config['icon']; ?>"></i>
                                         <?= $config['label']; ?>
                                     </span>
                                 </td>

@@ -4,11 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $title ?? 'PPDB System' ?></title>
+    <title><?= $title ?? app_name() ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="<?= base_url('css/readability.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/dynamic-logo.css') ?>">
     <style>
         :root {
             /* Modern Blue & White - Clean & Professional */
@@ -270,6 +272,22 @@
             height: 1px;
             background-color: rgba(255, 255, 255, 0.2);
             margin: 16px 16px;
+        }
+
+        .sidebar h6 {
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 24px 20px 12px;
+            opacity: 0.95;
+        }
+
+        .sidebar h6 i {
+            color: #ffffff;
+            margin-right: 8px;
+            opacity: 0.95;
         }
 
         /* Main Content */
@@ -1060,8 +1078,16 @@
     <?php if (session()->get('is_logged_in')): ?>
     <nav class="navbar">
         <a href="<?= base_url('/') ?>" class="navbar-brand">
-            <i class="bi bi-mortarboard-fill"></i>
-            <span>PPDB System</span>
+            <?php 
+            $logo = app_logo();
+            $appName = app_name();
+            ?>
+            <?php if (strpos($logo, 'default-logo.png') === false && file_exists(str_replace(base_url(), FCPATH, $logo))): ?>
+                <img src="<?= $logo ?>" alt="<?= esc($appName) ?>" style="height: 40px; width: auto; object-fit: contain;">
+            <?php else: ?>
+                <i class="bi bi-mortarboard-fill"></i>
+            <?php endif; ?>
+            <span><?= esc($appName) ?></span>
         </a>
         
         <div class="navbar-user">
@@ -1134,6 +1160,10 @@
                         <i class="bi bi-camera-video"></i>
                         <span>Kelola Konten Sales</span>
                     </a>
+                    <a href="<?= base_url('admin/settings') ?>" class="nav-link <?= (strpos(current_url(), 'admin/settings') !== false) ? 'active' : '' ?>">
+                        <i class="bi bi-gear-fill"></i>
+                        <span>Pengaturan Aplikasi</span>
+                    </a>
 
                     <div class="sidebar-divider"></div>
 
@@ -1191,7 +1221,7 @@
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <p class="footer-text">&copy; 2025 PPDB System - Student Admission Management</p>
+            <p class="footer-text">&copy; <?= date('Y') ?> <?= esc(app_name()) ?> - <?= esc(app_description()) ?></p>
         </div>
     </footer>
 

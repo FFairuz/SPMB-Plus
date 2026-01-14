@@ -2,6 +2,10 @@
 
 <?= $this->section('title'); ?>Detail Siswa<?= $this->endSection(); ?>
 
+<?= $this->section('styles'); ?>
+<link rel="stylesheet" href="/css/status-badges.css">
+<?= $this->endSection(); ?>
+
 <?= $this->section('content'); ?>
 <style>
     .page-header {
@@ -58,20 +62,7 @@
         border-left: 4px solid #667eea;
         margin: 0;
     }
-    .status-badge {
-        display: inline-block;
-        padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-        font-weight: 600;
-    }
-    .status-submitted {
-        background-color: #ffc107;
-        color: #333;
-    }
-    .status-verified {
-        background-color: #28a745;
-        color: white;
-    }
+    /* Status badge styles moved to /css/status-badges.css */
     .info-card {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
@@ -182,9 +173,21 @@
         </div>
         <div class="col-md-4 text-end">
             <h6>Status</h6>
-            <span class="status-badge status-<?= $applicant['status'] ?? 'submitted'; ?>">
-                <i class="bi bi-check-circle"></i> 
-                <?= ucfirst($applicant['status'] ?? 'pending'); ?>
+            <?php
+            $status = strtolower($applicant['status'] ?? 'submitted');
+            $status_config = [
+                'draft' => ['label' => 'Draft', 'class' => 'status-draft', 'icon' => 'file-earmark'],
+                'pending' => ['label' => 'Menunggu', 'class' => 'status-draft', 'icon' => 'clock'],
+                'submitted' => ['label' => 'Disubmit', 'class' => 'status-submitted', 'icon' => 'send'],
+                'verified' => ['label' => 'Terverifikasi', 'class' => 'status-verified', 'icon' => 'check-circle'],
+                'accepted' => ['label' => 'Diterima', 'class' => 'status-accepted', 'icon' => 'check2-all'],
+                'rejected' => ['label' => 'Ditolak', 'class' => 'status-rejected', 'icon' => 'x-circle'],
+            ];
+            $config = $status_config[$status] ?? ['label' => ucfirst($status), 'class' => 'status-draft', 'icon' => 'question'];
+            ?>
+            <span class="status-badge <?= $config['class']; ?>" data-tooltip="Status: <?= $config['label']; ?>">
+                <i class="bi bi-<?= $config['icon']; ?>"></i>
+                <?= $config['label']; ?>
             </span>
         </div>
     </div>

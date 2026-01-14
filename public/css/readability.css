@@ -1,0 +1,515 @@
+/* ============================================
+   PPDB System - Improved Text Readability CSS
+   Updated: 14 Januari 2026
+   ============================================ */
+
+:root {
+    /* Primary Colors - Better Contrast */
+    --primary-color: #2563eb;
+    --primary-dark: #1e40af;
+    --primary-light: #3b82f6;
+    
+    /* Semantic Colors */
+    --success-color: #059669;
+    --danger-color: #dc2626;
+    --warning-color: #d97706;
+    --info-color: #0891b2;
+    
+    /* Text Colors - High Contrast */
+    --text-dark: #1f2937;        /* Very dark gray - primary text */
+    --text-medium: #374151;      /* Medium gray - secondary text */
+    --text-light: #6b7280;       /* Light gray - tertiary text */
+    --text-white: #ffffff;       /* White text for dark backgrounds */
+    
+    /* Background Colors */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --bg-tertiary: #f3f4f6;
+    
+    /* Border Colors */
+    --border-light: #e5e7eb;
+    --border-medium: #d1d5db;
+    --border-dark: #9ca3af;
+}
+
+/* ============================================
+   BODY & GENERAL TEXT
+   ============================================ */
+
+body {
+    color: var(--text-dark);
+    background-color: var(--bg-primary);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* ============================================
+   HEADINGS - HIGH CONTRAST
+   ============================================ */
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-dark);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1.1rem; }
+h5 { font-size: 1rem; }
+h6 { font-size: 0.875rem; }
+
+/* ============================================
+   PARAGRAPH & TEXT
+   ============================================ */
+
+p {
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+strong, b {
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+em, i {
+    color: var(--text-medium);
+    font-style: italic;
+}
+
+/* ============================================
+   LINKS
+   ============================================ */
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+a:focus {
+    outline: 2px solid var(--primary-light);
+    outline-offset: 2px;
+}
+
+/* ============================================
+   BUTTONS - HIGH CONTRAST
+   ============================================ */
+
+.btn {
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+    color: var(--text-white);
+}
+
+.btn-secondary {
+    background-color: var(--text-medium);
+    color: var(--text-white);
+    border: 2px solid var(--text-medium);
+}
+
+.btn-secondary:hover {
+    background-color: var(--text-dark);
+    border-color: var(--text-dark);
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    color: var(--text-white);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    color: var(--text-white);
+}
+
+.btn-warning {
+    background-color: var(--warning-color);
+    color: var(--text-dark);
+}
+
+.btn-info {
+    background-color: var(--info-color);
+    color: var(--text-white);
+}
+
+/* ============================================
+   FORMS & INPUTS
+   ============================================ */
+
+.form-label {
+    color: var(--text-dark);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.form-control, .form-select {
+    color: var(--text-dark);
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    padding: 0.5rem 0.75rem;
+}
+
+.form-control:focus, .form-select:focus {
+    color: var(--text-dark);
+    background-color: var(--bg-primary);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-control::placeholder {
+    color: var(--text-light);
+}
+
+/* ============================================
+   ALERTS & MESSAGES
+   ============================================ */
+
+.alert {
+    padding: 0.75rem 1rem;
+    border-radius: 0.375rem;
+    border: none;
+    border-left: 4px solid;
+}
+
+.alert-success {
+    background-color: #f0fdf4;
+    border-left-color: var(--success-color);
+    color: #065f46;
+}
+
+.alert-danger {
+    background-color: #fef2f2;
+    border-left-color: var(--danger-color);
+    color: #7f1d1d;
+}
+
+.alert-warning {
+    background-color: #fffbeb;
+    border-left-color: var(--warning-color);
+    color: #78350f;
+}
+
+.alert-info {
+    background-color: #f0f9ff;
+    border-left-color: var(--info-color);
+    color: #0c4a6e;
+}
+
+/* ============================================
+   TABLES
+   ============================================ */
+
+table {
+    color: var(--text-dark);
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: var(--bg-tertiary);
+}
+
+thead th {
+    color: var(--text-dark);
+    font-weight: 600;
+    padding: 0.75rem;
+    border-bottom: 2px solid var(--border-medium);
+}
+
+tbody td {
+    color: var(--text-dark);
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+tbody tr:hover {
+    background-color: var(--bg-secondary);
+}
+
+/* ============================================
+   CARDS & SECTIONS
+   ============================================ */
+
+.card {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-light);
+    padding: 1rem;
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.card-body {
+    padding: 1.5rem;
+    color: var(--text-dark);
+}
+
+.card-title {
+    color: var(--text-dark);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.card-text {
+    color: var(--text-medium);
+}
+
+/* ============================================
+   BADGES & LABELS
+   ============================================ */
+
+.badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+}
+
+.badge-primary {
+    background-color: #dbeafe;
+    color: #0c4a6e;
+}
+
+.badge-success {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.badge-danger {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.badge-warning {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.badge-info {
+    background-color: #cffafe;
+    color: #0c4a6e;
+}
+
+/* ============================================
+   MODALS & OVERLAYS
+   ============================================ */
+
+.modal-header {
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.modal-header .modal-title {
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.modal-body {
+    color: var(--text-dark);
+}
+
+.modal-footer {
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border-light);
+}
+
+/* ============================================
+   DROPDOWNS & MENUS
+   ============================================ */
+
+.dropdown-menu {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-item {
+    color: var(--text-dark);
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: var(--bg-secondary);
+    color: var(--primary-color);
+}
+
+.dropdown-item.active {
+    background-color: var(--primary-color);
+    color: var(--text-white);
+}
+
+/* ============================================
+   CODE & PREFORMATTED TEXT
+   ============================================ */
+
+code {
+    background-color: var(--bg-tertiary);
+    color: #d946ef;
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.875rem;
+}
+
+pre {
+    background-color: #1f2937;
+    color: #f3f4f6;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    font-family: 'Courier New', monospace;
+}
+
+pre code {
+    background-color: transparent;
+    color: #f3f4f6;
+    padding: 0;
+}
+
+/* ============================================
+   PROGRESS BARS
+   ============================================ */
+
+.progress {
+    background-color: var(--bg-tertiary);
+    border-radius: 0.375rem;
+}
+
+.progress-bar {
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    font-weight: 500;
+}
+
+/* ============================================
+   UTILITIES
+   ============================================ */
+
+.text-muted {
+    color: var(--text-light) !important;
+}
+
+.text-secondary {
+    color: var(--text-medium) !important;
+}
+
+.text-dark {
+    color: var(--text-dark) !important;
+}
+
+.text-success {
+    color: var(--success-color) !important;
+}
+
+.text-danger {
+    color: var(--danger-color) !important;
+}
+
+.text-warning {
+    color: var(--warning-color) !important;
+}
+
+.text-info {
+    color: var(--info-color) !important;
+}
+
+.bg-light {
+    background-color: var(--bg-secondary) !important;
+}
+
+.bg-white {
+    background-color: var(--bg-primary) !important;
+}
+
+/* ============================================
+   ACCESSIBILITY IMPROVEMENTS
+   ============================================ */
+
+/* Focus states untuk keyboard navigation */
+:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Better contrast untuk disabled elements */
+:disabled,
+[disabled] {
+    opacity: 0.6;
+    color: var(--text-light);
+    cursor: not-allowed;
+}
+
+/* Selection highlight */
+::selection {
+    background-color: var(--primary-light);
+    color: var(--text-white);
+}
+
+::-moz-selection {
+    background-color: var(--primary-light);
+    color: var(--text-white);
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 768px) {
+    h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.25rem; }
+    h3 { font-size: 1.1rem; }
+    
+    body {
+        font-size: 13px;
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+    body {
+        background-color: white;
+        color: #000000;
+    }
+    
+    a {
+        color: #000000;
+    }
+    
+    .no-print {
+        display: none;
+    }
+}

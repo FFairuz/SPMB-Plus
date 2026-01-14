@@ -207,27 +207,16 @@ class PaymentController extends BaseController
             $bankName = $this->request->getPost('bank_name');
             $accountHolder = $this->request->getPost('account_holder');
 
-            $existingPayment = $this->paymentModel->getPaymentByApplicantId($applicantId);
-
-            if ($existingPayment) {
-                $this->paymentModel->update($existingPayment['id'], [
-                    'transfer_amount' => $transferAmount,
-                    'transfer_date' => $transferDate,
-                    'bank_name' => $bankName,
-                    'account_holder' => $accountHolder,
-                    'payment_status' => 'submitted',
-                ]);
-            } else {
-                $this->paymentModel->insert([
-                    'applicant_id' => $applicantId,
-                    'registration_fee' => 250000,
-                    'transfer_amount' => $transferAmount,
-                    'transfer_date' => $transferDate,
-                    'bank_name' => $bankName,
-                    'account_holder' => $accountHolder,
-                    'payment_status' => 'submitted',
-                ]);
-            }
+            // ALWAYS INSERT NEW PAYMENT - Support multiple payments per applicant
+            $this->paymentModel->insert([
+                'applicant_id' => $applicantId,
+                'registration_fee' => 250000,
+                'transfer_amount' => $transferAmount,
+                'transfer_date' => $transferDate,
+                'bank_name' => $bankName,
+                'account_holder' => $accountHolder,
+                'payment_status' => 'submitted',
+            ]);
 
             return redirect()->to('/admin/payments?status=submitted')->with(
                 'success',
@@ -239,6 +228,55 @@ class PaymentController extends BaseController
 
         return view('admin/manual_payment_entry', [
             'applicants' => $applicants,
+        ]);
+    }
+
+    /**
+     * Print payment receipt (Bukti Pembayaran)
+     * Dapat diakses oleh Admin dan Applicant
+     */
+    public function printReceipt($paymentId)
+    {
+        $userId = session()->get('user_id');
+        $role = session()->get('role');
+
+        if (!$userId) {
+            return redirect()->to('/auth/login');
+        }
+
+        // Get payment with applicant data
+        $payment = $this->paymentModel->getPaymentWithApplicant($paymentId);
+
+        if (!$payment) {
+            return redirect()->back()->with('error', 'Data pembayaran tidak ditemukan');
+        }
+
+        // Authorization check
+        if ($role === 'applicant') {
+            // Applicant hanya bisa print bukti pembayaran sendiri
+            $applicant = $this->applicantModel->where('user_id', $userId)->first();
+            if (!$applicant || $applicant['id'] !== $payment['applicant_id']) {
+                return redirect()->to('/applicant/dashboard')->with('error', 'Akses ditolak');
+            }
+        } elseif (!in_array($role, ['admin', 'bendahara', 'panitia'])) {
+            return redirect()->back()->with('error', 'Akses ditolak');
+        }
+
+        // Only allow printing for confirmed payments
+        if ($payment['payment_status'] !== 'confirmed') {
+            return redirect()->back()->with('error', 'Bukti pembayaran hanya dapat dicetak untuk pembayaran yang sudah dikonfirmasi');
+        }
+
+        // Get application settings
+        $appName = function_exists('app_name') ? app_name() : 'SPMB-Plus';
+        $schoolName = function_exists('school_name') ? school_name() : 'SMK MUHAMMADIYAH 1 JAKARTA';
+        $appLogo = function_exists('app_logo') ? app_logo() : null;
+
+        return view('payment/print_receipt', [
+            'payment' => $payment,
+            'appName' => $appName,
+            'schoolName' => $schoolName,
+            'appLogo' => $appLogo,
         ]);
     }
 }

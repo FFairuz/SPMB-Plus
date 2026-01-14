@@ -70,6 +70,75 @@ class PaymentModel extends Model
         return $this->where('user_id', $userId)->first();
     }
 
+    // Get ALL payments by user (support multiple payments)
+    public function getPaymentsByUserId($userId)
+    {
+        return $this->where('user_id', $userId)
+            ->orderBy('created_at', 'DESC')
+            ->findAll();
+    }
+
+    // Get latest payment by user
+    public function getLatestPaymentByUserId($userId)
+    {
+        return $this->where('user_id', $userId)
+            ->orderBy('created_at', 'DESC')
+            ->first();
+    }
+
+    // Get confirmed payments by user
+    public function getConfirmedPaymentsByUserId($userId)
+    {
+        return $this->where('user_id', $userId)
+            ->where('payment_status', 'confirmed')
+            ->orderBy('created_at', 'DESC')
+            ->findAll();
+    }
+
+    // Get ALL payments by applicant (support multiple payments/installments)
+    public function getPaymentsByApplicantId($applicantId)
+    {
+        return $this->where('applicant_id', $applicantId)
+            ->orderBy('created_at', 'DESC')
+            ->findAll();
+    }
+
+    // Get total paid amount by user
+    public function getTotalPaidByUserId($userId)
+    {
+        $result = $this->selectSum('transfer_amount')
+            ->where('user_id', $userId)
+            ->where('payment_status', 'confirmed')
+            ->get()
+            ->getRow();
+        
+        return $result ? (float)$result->transfer_amount : 0;
+    }
+
+    // Get total paid amount by applicant
+    public function getTotalPaidByApplicantId($applicantId)
+    {
+        $result = $this->selectSum('transfer_amount')
+            ->where('applicant_id', $applicantId)
+            ->where('payment_status', 'confirmed')
+            ->get()
+            ->getRow();
+        
+        return $result ? (float)$result->transfer_amount : 0;
+    }
+
+    // Get payment count by user
+    public function getPaymentCountByUserId($userId, $status = null)
+    {
+        $builder = $this->where('user_id', $userId);
+        
+        if ($status) {
+            $builder->where('payment_status', $status);
+        }
+        
+        return $builder->countAllResults();
+    }
+
     // Update payment status
     public function updatePaymentStatus($paymentId, $status, $confirmedBy = null)
     {

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>White vs Gradient Design - Status Badge</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/status-badges.css">
+    <link rel="stylesheet" href="css/status-badges-gradient.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem 0;
+        }
+        .container {
+            max-width: 1400px;
+        }
+        .header {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .design-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .design-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+        .badge-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .badge-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 0.5rem;
+        }
+        .badge-label {
+            flex: 0 0 120px;
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.875rem;
+        }
+        .pros-cons {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .pros-cons-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        .pros, .cons {
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+        }
+        .pros {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-left: 4px solid #10b981;
+        }
+        .cons {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-left: 4px solid #ef4444;
+        }
+        .pros h4, .cons h4 {
+            margin-bottom: 1rem;
+        }
+        .pros ul, .cons ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .pros li, .cons li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .pros li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        .cons li:before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: #ef4444;
+            font-weight: bold;
+        }
+        .table-demo {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .table-demo table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+        .table-demo th,
+        .table-demo td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .table-demo th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+        .recommendation {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        .recommendation h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 992px) {
+            .comparison-grid,
+            .pros-cons-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="mb-3">🎨 Design Comparison</h1>
+            <p class="text-muted mb-0">White Design vs Gradient Design - Status Badge</p>
+        </div>
+
+        <!-- Side by Side Comparison -->
+        <div class="comparison-grid">
+            <!-- White Design -->
+            <div class="design-card">
+                <h3><i class="bi bi-circle"></i> White Design (NEW)</h3>
+                <p class="text-muted">Background putih dengan border & text berwarna</p>
+                
+                <div class="badge-list">
+                    <div class="badge-item">
+                        <span class="badge-label">Draft:</span>
+                        <span class="status-badge status-draft">
+                            <i class="bi bi-file-earmark"></i>
+                            Draft
+                        </span>
+                    </div>
+                    
+                    <div class="badge-item">
+                        <span class="badge-label">Disubmit:</span>
+                        <span class="status-badge status-submitted">
+                            <i class="bi bi-send"></i>
+                            Disubmit
+                        </span>
+                    </div>
+                    
+                    <div class="badge-item">
+                        <span class="badge-label">Terverifikasi:</span>
+                        <span class="status-badge status-verified">
+                            <i class="bi bi-check-circle"></i>
+                            Terverifikasi
+                        </span>
+                    </div>
+                    
+                    <div class="badge-item">
+                        <span class="badge-label">Diterima:</span>
+                        <span class="status-badge status-accepted">
+                            <i class="bi bi-check2-all"></i>
+                            Diterima
+                        </span>
+                    </div>
+                    
+                    <div class="badge-item">
+                        <span class="badge-label">Ditolak:</span>
+                        <span class="status-badge status-rejected">
+                            <i class="bi bi-x-circle"></i>
+                            Ditolak
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gradient Design -->
+            <div class="design-card">
+                <h3><i class="bi bi-circle-fill"></i> Gradient Design</h3>
+                <p class="text-muted">Background gradient dengan text putih</p>
+                
+                <div class="badge-list">
+                    <div class="badge-item">
+                        <span class="badge-label">Draft:</span>
+                        <span class="status-badge status-badge-gradient status-draft">
+                            <i class="bi bi-file-earmark"></i>
+                            Draft
+                        </span>
+                    </div>
+                    
+                    <div class="badge-item">
+                        <span class="badge-label">Disubmit:</span>
+                        <span class="status-badge status-badge-gradient status-submitted">
+                            <i class="bi bi-send"></i>
+                            Disubmit
+                        </span>
+                    </div>
+                    
+                    <div class="badge-item">
+                        <span class="badge-label">Terverifikasi:</span>
+                        <span class="status-badge status-badge-gradient status-verified">
+                            <i class="bi bi-check-circle"></i>
+                            Terverifikasi
+                        </span>
+                    </div>
+                    
+                    <div class="badge-item">
+                        <span class="badge-label">Diterima:</span>
+                        <span class="status-badge status-badge-gradient status-accepted">
+                            <i class="bi bi-check2-all"></i>
+                            Diterima
+                        </span>
+                    </div>
+                    
+                    <div class="badge-item">
+                        <span class="badge-label">Ditolak:</span>
+                        <span class="status-badge status-badge-gradient status-rejected">
+                            <i class="bi bi-x-circle"></i>
+                            Ditolak
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pros and Cons -->
+        <div class="pros-cons">
+            <h3 class="text-center mb-4">📊 Pros & Cons Analysis</h3>
+            
+            <div class="pros-cons-grid">
+                <!-- White Design Pros -->
+                <div class="pros">
+                    <h4><i class="bi bi-hand-thumbs-up-fill"></i> White Design - Keunggulan</h4>
+                    <ul>
+                        <li>Clean dan minimalis</li>
+                        <li>Professional appearance</li>
+                        <li>Easy to scan multiple badges</li>
+                        <li>Less visual fatigue</li>
+                        <li>Perfect untuk tabel data</li>
+                        <li>Print-friendly</li>
+                        <li>Modern & trendy</li>
+                        <li>Better readability</li>
+                    </ul>
+                </div>
+
+                <!-- Gradient Design Pros -->
+                <div class="pros">
+                    <h4><i class="bi bi-hand-thumbs-up-fill"></i> Gradient Design - Keunggulan</h4>
+                    <ul>
+                        <li>Eye-catching & vibrant</li>
+                        <li>Strong visual presence</li>
+                        <li>Perfect untuk hero sections</li>
+                        <li>High perceived importance</li>
+                        <li>Memorable design</li>
+                        <li>Premium look & feel</li>
+                        <li>Great for highlights</li>
+                        <li>Distinctive appearance</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pros-cons-grid mt-3">
+                <!-- White Design Cons -->
+                <div class="cons">
+                    <h4><i class="bi bi-hand-thumbs-down-fill"></i> White Design - Kekurangan</h4>
+                    <ul>
+                        <li>Less eye-catching</li>
+                        <li>Can blend too much</li>
+                        <li>Lower visual impact</li>
+                        <li>Less premium feel</li>
+                    </ul>
+                </div>
+
+                <!-- Gradient Design Cons -->
+                <div class="cons">
+                    <h4><i class="bi bi-hand-thumbs-down-fill"></i> Gradient Design - Kekurangan</h4>
+                    <ul>
+                        <li>Heavy visual weight</li>
+                        <li>Can be overwhelming</li>
+                        <li>Tiring in large quantities</li>
+                        <li>Less suitable for tables</li>
+                        <li>Not print-friendly</li>
+                        <li>Can distract from content</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table Demo -->
+        <div class="table-demo">
+            <h3 class="text-center mb-0">📋 In Data Table Context</h3>
+            <p class="text-center text-muted mb-0">Lihat mana yang lebih cocok untuk tabel data</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>No. Registrasi</th>
+                        <th>Nama</th>
+                        <th>White Design</th>
+                        <th>Gradient Design</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>PPDB-001</code></td>
+                        <td>Ahmad Fauzi</td>
+                        <td>
+                            <span class="status-badge status-draft">
+                                <i class="bi bi-file-earmark"></i>
+                                Draft
+                            </span>
+                        </td>
+                        <td>
+                            <span class="status-badge status-badge-gradient status-draft">
+                                <i class="bi bi-file-earmark"></i>
+                                Draft
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><code>PPDB-002</code></td>
+                        <td>Siti Nurhaliza</td>
+                        <td>
+                            <span class="status-badge status-submitted">
+                                <i class="bi bi-send"></i>
+                                Disubmit
+                            </span>
+                        </td>
+                        <td>
+                            <span class="status-badge status-badge-gradient status-submitted">
+                                <i class="bi bi-send"></i>
+                                Disubmit
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><code>PPDB-003</code></td>
+                        <td>Budi Santoso</td>
+                        <td>
+                            <span class="status-badge status-verified">
+                                <i class="bi bi-check-circle"></i>
+                                Terverifikasi
+                            </span>
+                        </td>
+                        <td>
+                            <span class="status-badge status-badge-gradient status-verified">
+                                <i class="bi bi-check-circle"></i>
+                                Terverifikasi
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><code>PPDB-004</code></td>
+                        <td>Dewi Lestari</td>
+                        <td>
+                            <span class="status-badge status-accepted">
+                                <i class="bi bi-check2-all"></i>
+                                Diterima
+                            </span>
+                        </td>
+                        <td>
+                            <span class="status-badge status-badge-gradient status-accepted">
+                                <i class="bi bi-check2-all"></i>
+                                Diterima
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><code>PPDB-005</code></td>
+                        <td>Eko Prasetyo</td>
+                        <td>
+                            <span class="status-badge status-rejected">
+                                <i class="bi bi-x-circle"></i>
+                                Ditolak
+                            </span>
+                        </td>
+                        <td>
+                            <span class="status-badge status-badge-gradient status-rejected">
+                                <i class="bi bi-x-circle"></i>
+                                Ditolak
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Recommendation -->
+        <div class="recommendation">
+            <h3><i class="bi bi-award-fill"></i> Rekomendasi</h3>
+            <p class="mb-4">Berdasarkan analisis dan best practices modern UI/UX:</p>
+            
+            <div class="row text-start">
+                <div class="col-md-6 mb-3">
+                    <div class="bg-white text-dark p-3 rounded">
+                        <h5 class="text-primary"><i class="bi bi-check-circle-fill"></i> Gunakan White Design Untuk:</h5>
+                        <ul class="mb-0">
+                            <li>Data tables & lists (✅ Recommended)</li>
+                            <li>Admin dashboards</li>
+                            <li>Information displays</li>
+                            <li>Reports & exports</li>
+                            <li>Professional documents</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="bg-white text-dark p-3 rounded">
+                        <h5 class="text-info"><i class="bi bi-stars"></i> Gunakan Gradient Design Untuk:</h5>
+                        <ul class="mb-0">
+                            <li>Hero sections</li>
+                            <li>Call-to-action areas</li>
+                            <li>Highlight boxes</li>
+                            <li>Marketing pages</li>
+                            <li>Single prominent badges</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4 p-3 bg-light text-dark rounded">
+                <h5 class="mb-2">💡 Best Practice:</h5>
+                <p class="mb-0">
+                    <strong>White Design</strong> untuk aplikasi PPDB karena lebih cocok untuk tabel data, 
+                    list pendaftar, dan dashboard admin. Lebih professional, clean, dan tidak membebani visual user.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

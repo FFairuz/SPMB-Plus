@@ -367,12 +367,15 @@ public function upload_documents()
                     $paymentData['transfer_proof_path'] = 'uploads/payments/' . $newName;
                 }
 
-                if ($payment) {
-                    // Update existing payment
+                // Logic: UPDATE only if payment exists AND status is pending/rejected
+                // If confirmed, always create NEW payment (support multiple payments)
+                if ($payment && in_array($payment['payment_status'], ['pending', 'rejected'])) {
+                    // Update existing pending/rejected payment (re-upload)
                     $paymentModel->update($payment['id'], $paymentData);
                     $paymentId = $payment['id'];
                 } else {
                     // Create new payment record
+                    // This happens if: no payment exists, or payment already confirmed
                     $paymentId = $paymentModel->insert($paymentData);
                 }
 

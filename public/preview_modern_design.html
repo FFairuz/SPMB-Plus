@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview: Modern Tambah Siswa Design</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
+    <style>
+        /* ========================================
+           MODERN PAGE DESIGN - PREVIEW
+           Matching Panitia Sidebar (Blue Theme)
+           ======================================== */
+        body {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            background-attachment: fixed;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .main-content {
+            background: #f8f9fa;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 2.5rem 0;
+            margin: -2rem -1rem 2rem -1rem;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: 100px 100px;
+            opacity: 0.3;
+        }
+
+        .page-header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .page-header h1 i {
+            font-size: 2.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Progress Steps */
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            position: relative;
+            padding: 0;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #e2e8f0;
+            z-index: 0;
+        }
+
+        .progress-step {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            flex: 1;
+        }
+
+        .progress-step-circle {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border: 3px solid #e2e8f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            font-weight: 700;
+            color: #94a3b8;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active .progress-step-circle {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-color: #3b82f6;
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+            transform: scale(1.1);
+        }
+
+        .progress-step-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #64748b;
+        }
+
+        .progress-step.active .progress-step-label {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        /* Section Cards */
+        .section-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .section-card:hover {
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .section-title h5 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .section-title p {
+            margin: 0.25rem 0 0 0;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        /* Form Controls */
+        .form-label {
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .required-badge {
+            background: #ef4444;
+            color: white;
+            font-size: 0.625rem;
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .form-control, .form-select {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Modern Hobby Tags */
+        .select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__choice {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border: none;
+            color: white;
+            padding: 0.4rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .hobby-help-text {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            position: sticky;
+            bottom: 0;
+            background: white;
+            padding: 1.5rem;
+            margin: 2rem -2rem -2rem -2rem;
+            border-top: 2px solid #e2e8f0;
+            border-radius: 0 0 20px 20px;
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .btn-modern {
+            padding: 0.875rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-modern-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-modern-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+            color: white;
+        }
+
+        .btn-modern-secondary {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .btn-modern-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .demo-badge {
+            background: #fbbf24;
+            color: #78350f;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <div class="container">
+            <div class="demo-badge">
+                <i class="bi bi-eye-fill me-2"></i>
+                DEMO PREVIEW - Redesign Modern Tambah Siswa
+            </div>
+
+            <!-- Modern Page Header -->
+            <div class="page-header">
+                <div class="container page-header-content">
+                    <h1>
+                        <i class="bi bi-person-plus-fill"></i>
+                        <div>
+                            Tambah Siswa Baru
+                            <p class="mb-0" style="font-size: 1rem; font-weight: 400;">Formulir pendaftaran calon siswa baru</p>
+                        </div>
+                    </h1>
+                </div>
+            </div>
+
+            <!-- Progress Steps -->
+            <div class="progress-steps">
+                <div class="progress-step active">
+                    <div class="progress-step-circle">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <div class="progress-step-label">Data Pribadi</div>
+                </div>
+                <div class="progress-step">
+                    <div class="progress-step-circle">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </div>
+                    <div class="progress-step-label">Alamat</div>
+                </div>
+                <div class="progress-step">
+                    <div class="progress-step-circle">
+                        <i class="bi bi-mortarboard-fill"></i>
+                    </div>
+                    <div class="progress-step-label">Pendidikan</div>
+                </div>
+                <div class="progress-step">
+                    <div class="progress-step-circle">
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+                    <div class="progress-step-label">Selesai</div>
+                </div>
+            </div>
+
+            <!-- Section 1: Data Pribadi -->
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <div class="section-title">
+                        <h5>Data Pribadi</h5>
+                        <p>Informasi identitas calon siswa</p>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            NIK
+                            <span class="required-badge">WAJIB</span>
+                        </label>
+                        <input type="text" class="form-control" placeholder="Masukkan 16 digit NIK" value="3201234567890123">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Nama Lengkap
+                            <span class="required-badge">WAJIB</span>
+                        </label>
+                        <input type="text" class="form-control" placeholder="Nama lengkap sesuai akta kelahiran" value="Ahmad Rizki Pratama">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Jenis Kelamin
+                            <span class="required-badge">WAJIB</span>
+                        </label>
+                        <select class="form-select">
+                            <option value="">Pilih jenis kelamin</option>
+                            <option value="laki-laki" selected>Laki-laki</option>
+                            <option value="perempuan">Perempuan</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">
+                            Tempat Lahir
+                            <span class="required-badge">WAJIB</span>
+                        </label>
+                        <input type="text" class="form-control" placeholder="Kota/Kabupaten" value="Jakarta">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">
+                            Tanggal Lahir
+                            <span class="required-badge">WAJIB</span>
+                        </label>
+                        <input type="date" class="form-control" value="2010-05-15">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Pendidikan & Minat (PREVIEW HOBBY) -->
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <i class="bi bi-mortarboard-fill"></i>
+                    </div>
+                    <div class="section-title">
+                        <h5>Pendidikan & Minat</h5>
+                        <p>Sekolah asal, jurusan, dan hobi siswa</p>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">                    <label class="form-label">
+                        <i class="bi bi-heart-fill" style="color: #3b82f6;"></i>
+                        Hobi / Minat
+                    </label>
+                        <select id="hobby-demo" class="form-select" multiple="multiple">
+                            <option value="1" data-icon="bi-bicycle" selected>Sepeda</option>
+                            <option value="2" data-icon="bi-music-note" selected>Musik</option>
+                            <option value="3" data-icon="bi-palette" selected>Melukis</option>
+                            <option value="4" data-icon="bi-book">Membaca</option>
+                            <option value="5" data-icon="bi-controller">Gaming</option>
+                            <option value="6" data-icon="bi-camera">Fotografi</option>
+                        </select>
+                        <div class="hobby-help-text">
+                            <i class="bi bi-info-circle-fill" style="color: #3b82f6;"></i>
+                            <span><strong>3</strong> hobi dipilih 🎯</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">
+                            Jurusan yang Diminati
+                            <span class="required-badge">WAJIB</span>
+                        </label>
+                        <select class="form-select">
+                            <option value="">Pilih jurusan</option>
+                            <option value="1" selected>TKJ - Teknik Komputer Jaringan</option>
+                            <option value="2">RPL - Rekayasa Perangkat Lunak</option>
+                            <option value="3">MM - Multimedia</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="section-card">
+                <div class="action-buttons">
+                    <button type="button" class="btn-modern btn-modern-secondary">
+                        <i class="bi bi-x-circle"></i> Batal
+                    </button>
+                    <button type="button" class="btn-modern btn-modern-primary">
+                        <i class="bi bi-check-circle"></i> Simpan Data Siswa
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#hobby-demo').select2({
+                theme: 'bootstrap-5',
+                placeholder: '✨ Pilih hobi yang diminati...',
+                allowClear: true,
+                width: '100%',
+                closeOnSelect: false
+            });
+        });
+    </script>
+</body>
+</html>

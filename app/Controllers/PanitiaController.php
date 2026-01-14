@@ -113,6 +113,8 @@ class PanitiaController extends BaseController
                 'provinsi' => 'required',
                 'kode_pos' => 'required|numeric|min_length[5]|max_length[5]',
                 'nomor_hp' => 'required|numeric|min_length[10]|max_length[13]',
+                'hobbies' => 'permit_empty', // Array of hobby IDs
+                'jurusan_id' => 'required|integer|is_not_unique[majors.id]',
                 'asal_sekolah' => 'required|min_length[5]',
                 'npsn_sekolah_asal' => 'numeric|min_length[8]|max_length[8]',
                 'nama_ayah' => 'required|min_length[3]',
@@ -120,14 +122,22 @@ class PanitiaController extends BaseController
             ];
 
             if (!$this->validate($rules)) {
-                // Get schools for dropdown
+                // Get schools, majors, and hobbies for dropdown
                 $schoolModel = new \App\Models\School();
                 $schools = $schoolModel->orderBy('nama', 'ASC')->findAll();
+                
+                $majorModel = new \App\Models\Major();
+                $majors = $majorModel->getActiveMajors();
+                
+                $hobbyModel = new \App\Models\Hobby();
+                $hobbies = $hobbyModel->getActiveHobbies();
                 
                 return view('panitia/tambah_siswa', [
                     'title' => 'Tambah Siswa Baru',
                     'validation' => $this->validator,
                     'schools' => $schools,
+                    'majors' => $majors,
+                    'hobbies' => $hobbies,
                 ]);
             }
 
@@ -151,6 +161,7 @@ class PanitiaController extends BaseController
                 'provinsi' => $this->request->getPost('provinsi'),
                 'kode_pos' => $this->request->getPost('kode_pos'),
                 'nomor_hp' => $this->request->getPost('nomor_hp'),
+                'jurusan_id' => (int) $this->request->getPost('jurusan_id'),
                 'asal_sekolah' => $this->request->getPost('asal_sekolah'),
                 'npsn_sekolah_asal' => $this->request->getPost('npsn_sekolah_asal') ?: null,
                 'nama_ayah' => $this->request->getPost('nama_ayah'),
@@ -164,6 +175,14 @@ class PanitiaController extends BaseController
                 if ($this->applicantModel->insert($data)) {
                     // Ambil ID yang baru ditambahkan
                     $applicant_id = $this->applicantModel->insertID();
+                    
+                    // Save hobbies (many-to-many relationship)
+                    $hobbies = $this->request->getPost('hobbies');
+                    if (!empty($hobbies) && is_array($hobbies)) {
+                        $applicantHobbyModel = new \App\Models\ApplicantHobby();
+                        $applicantHobbyModel->syncHobbies($applicant_id, $hobbies);
+                    }
+                    
                     session()->setFlashdata('success', 'Calon siswa berhasil didaftarkan dengan nomor pendaftaran: ' . $nomor_pendaftaran);
                     
                     // Redirect berdasarkan role
@@ -182,14 +201,22 @@ class PanitiaController extends BaseController
             }
         }
 
-        // Get schools for dropdown
+        // Get schools, majors, and hobbies for dropdown
         $schoolModel = new \App\Models\School();
         $schools = $schoolModel->orderBy('nama', 'ASC')->findAll();
+        
+        $majorModel = new \App\Models\Major();
+        $majors = $majorModel->getActiveMajors();
+        
+        $hobbyModel = new \App\Models\Hobby();
+        $hobbies = $hobbyModel->getActiveHobbies();
         
         return view('panitia/tambah_siswa', [
             'title' => 'Tambah Siswa Baru',
             'validation' => null,
             'schools' => $schools,
+            'majors' => $majors,
+            'hobbies' => $hobbies,
         ]);
     }
 

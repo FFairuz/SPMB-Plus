@@ -88,6 +88,24 @@ $routes->get('admin/tambah-siswa', 'PanitiaController::tambah_siswa');
 $routes->post('admin/tambah-siswa', 'PanitiaController::tambah_siswa');
 $routes->get('admin/daftar-siswa', 'PanitiaController::daftar_siswa');
 $routes->get('admin/verifikasi-pendaftar', 'PanitiaController::verifikasi_pendaftar');
+
+// Admin Major Management Routes
+$routes->get('admin/majors', 'AdminMajorController::index');
+$routes->get('admin/majors/create', 'AdminMajorController::create');
+$routes->post('admin/majors/create', 'AdminMajorController::create');
+$routes->get('admin/majors/edit/(:num)', 'AdminMajorController::edit/$1');
+$routes->post('admin/majors/edit/(:num)', 'AdminMajorController::edit/$1');
+$routes->get('admin/majors/delete/(:num)', 'AdminMajorController::delete/$1');
+$routes->post('admin/majors/toggle-status/(:num)', 'AdminMajorController::toggleStatus/$1');
+
+// Admin Hobby Management Routes
+$routes->get('admin/hobbies', 'AdminHobbyController::index');
+$routes->get('admin/hobbies/create', 'AdminHobbyController::create');
+$routes->post('admin/hobbies/create', 'AdminHobbyController::create');
+$routes->get('admin/hobbies/edit/(:num)', 'AdminHobbyController::edit/$1');
+$routes->post('admin/hobbies/edit/(:num)', 'AdminHobbyController::edit/$1');
+$routes->get('admin/hobbies/delete/(:num)', 'AdminHobbyController::delete/$1');
+
 // Kop Surat Routes
 $routes->get('admin/kelola-kop-surat', 'AdminController::kelola_kop_surat');
 $routes->post('admin/kelola-kop-surat', 'AdminController::kelola_kop_surat');
@@ -110,6 +128,13 @@ $routes->get('admin/content-management/edit/(:num)', 'ContentController::edit/$1
 $routes->post('admin/content-management/update/(:num)', 'ContentController::update/$1');
 $routes->post('admin/content-management/delete/(:num)', 'ContentController::delete/$1');
 $routes->post('admin/content-management/toggle-status/(:num)', 'ContentController::toggleStatus/$1');
+
+// Admin Settings Routes
+$routes->get('admin/settings', 'SettingsController::index');
+$routes->post('admin/settings/update', 'SettingsController::update');
+$routes->get('admin/settings/reset-logo', 'SettingsController::resetLogo');
+$routes->get('admin/settings/api/(:any)', 'SettingsController::getSetting/$1');
+$routes->get('admin/settings/api', 'SettingsController::getAllSettings');
 
 // Admin Sales Content Management Routes
 $routes->get('admin/sales-content', 'SalesContentController::index');
@@ -169,3 +194,8 @@ $routes->get('debug/payments-json', 'DebugApi::payments_json');
 // Test routes for sidebar diagnostic
 $routes->get('test/sidebar', 'SidebarTest::index');
 $routes->get('test/sidebar-inspect', 'SidebarTest::inspect');
+
+// Payment Receipt Routes
+$routes->get('payment/print-receipt/(:num)', 'PaymentController::printReceipt/$1');
+$routes->get('applicant/payment/print-receipt/(:num)', 'PaymentController::printReceipt/$1');
+$routes->get('admin/payment/print-receipt/(:num)', 'PaymentController::printReceipt/$1');

@@ -13,7 +13,6 @@ class AddProfilePictureToUsers extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'null' => true,
-                'after' => 'phone',
             ],
         ];
         

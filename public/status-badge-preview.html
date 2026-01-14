@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status Badge Preview - White Design - SPMB-Plus</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/status-badges.css">
+    <link rel="stylesheet" href="css/status-badges-gradient.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+        .preview-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        .preview-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .preview-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .preview-section {
+            margin-bottom: 3rem;
+        }
+        .preview-section h3 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+        .badge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .badge-demo {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s;
+        }
+        .badge-demo:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+        .badge-demo-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #6c757d;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: #f8f9fa;
+            border-radius: 0.5rem;
+            border-left: 3px solid #667eea;
+        }
+        .feature-item i {
+            color: #667eea;
+            font-size: 1.25rem;
+        }
+        .color-palette {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .color-swatch {
+            flex: 1;
+            min-width: 150px;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            color: white;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .table-demo {
+            margin-top: 1rem;
+        }
+        .table-demo table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table-demo th,
+        .table-demo td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .table-demo th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #495057;
+        }
+        .table-demo tr:hover {
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <!-- Header -->
+        <div class="preview-header">
+            <h1 class="mb-3">🎨 Status Badge Design System</h1>
+            <p class="mb-2">Modern White/Light Design - Responsive & Accessible</p>
+            <p class="mb-0"><small>Background putih dengan border & text berwarna</small></p>
+        </div>
+
+        <!-- Primary Style -->
+        <div class="preview-card">
+            <div class="preview-section">
+                <h3><i class="bi bi-star-fill"></i> White/Light Design - Primary Style</h3>
+                <p class="text-muted mb-4">Background putih dengan border berwarna dan text berwarna (seperti gambar referensi)</p>
+                
+                <div class="badge-grid">
+                    <div class="badge-demo">
+                        <div class="badge-demo-title">Draft / Pending</div>
+                        <span class="status-badge status-draft" data-tooltip="Status: Draft">
+                            <i class="bi bi-file-earmark"></i>
+                            Draft
+                        </span>
+                    </div>
+
+                    <div class="badge-demo">
+                        <div class="badge-demo-title">Submitted</div>
+                        <span class="status-badge status-submitted" data-tooltip="Status: Disubmit">
+                            <i class="bi bi-send"></i>
+                            Disubmit
+                        </span>
+                    </div>
+
+                    <div class="badge-demo">
+                        <div class="badge-demo-title">Verified</div>
+                        <span class="status-badge status-verified" data-tooltip="Status: Terverifikasi">
+                            <i class="bi bi-check-circle"></i>
+                            Terverifikasi
+                        </span>
+                    </div>
+
+                    <div class="badge-demo">
+                        <div class="badge-demo-title">Accepted</div>
+                        <span class="status-badge status-accepted" data-tooltip="Status: Diterima">
+                            <i class="bi bi-check2-all"></i>
+                            Diterima
+                        </span>
+                    </div>
+
+                    <div class="badge-demo">
+                        <div class="badge-demo-title">Rejected</div>
+                        <span class="status-badge status-rejected" data-tooltip="Status: Ditolak">
+                            <i class="bi bi-x-circle"></i>
+                            Ditolak
+                        </span>
+                    </div>
+
+                    <div class="badge-demo">
+                        <div class="badge-demo-title">Pending (Clock)</div>
+                        <span class="status-badge status-draft" data-tooltip="Status: Menunggu">
+                            <i class="bi bi-clock"></i>
+                            Menunggu
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alternative Style -->
+        <div class="preview-card">
+            <div class="preview-section">
+                <h3><i class="bi bi-palette-fill"></i> Gradient Variant (Optional)</h3>
+                <p class="text-muted mb-4">Gradient design untuk variasi tampilan (tambahkan class 'status-badge-gradient')</p>
+                
+                <div class="badge-grid">
+                    <div class="badge-demo">
+                        <div class="badge-demo-title">Draft</div>
+                        <span class="status-badge status-badge-gradient status-draft">
+                            <i class="bi bi-file-earmark"></i>
+                            Draft
+                        </span>
+                    </div>
+
+                    <div class="badge-demo">
+                        <div class="badge-demo-title">Submitted</div>
+                        <span class="status-badge status-badge-gradient status-submitted">
+                            <i class="bi bi-send"></i>
+                            Disubmit
+                        </span>
+                    </div>
+
+                    <div class="badge-demo">
+                        <div class="badge-demo-title">Verified</div>
+                        <span class="status-badge status-badge-gradient status-verified">
+                            <i class="bi bi-check-circle"></i>
+                            Terverifikasi
+                        </span>
+                    </div>
+
+                    <div class="badge-demo">
+                        <div class="badge-demo-title">Accepted</div>
+                        <span class="status-badge status-badge-gradient status-accepted">
+                            <i class="bi bi-check2-all"></i>
+                            Diterima
+                        </span>
+                    </div>
+
+                    <div class="badge-demo">
+                        <div class="badge-demo-title">Rejected</div>
+                        <span class="status-badge status-badge-gradient status-rejected">
+                            <i class="bi bi-x-circle"></i>
+                            Ditolak
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alternative Flat Style -->
+        <div class="preview-card">
+            <div class="preview-section">
+                <h3><i class="bi bi-app"></i> Alternative Flat Style</h3>
+                <p class="text-muted mb-4">Flat design dengan icon circle (optional style)</p>
+                
+                <div class="badge-grid">
+                    <div class="badge-demo">
+                        <div class="badge-demo-title">Draft</div>
+                        <span class="status-badge-alt status-draft">
+                            <div class="icon-circle">
+                                <i class="bi bi-file-earmark"></i>
+                            </div>
+                            Draft
+                        </span>
+                    </div>
+
+                    <div class="badge-demo">
+                        <div class="badge-demo-title">Submitted</div>
+                        <span class="status-badge-alt status-submitted">
+                            <div class="icon-circle">
+                                <i class="bi bi-send"></i>
+                            </div>
+                            Disubmit
+                        </span>
+                    </div>
+
+                    <div class="badge-demo">
+                        <div class="badge-demo-title">Verified</div>
+                        <span class="status-badge-alt status-verified">
+                            <div class="icon-circle">
+                                <i class="bi bi-check-circle"></i>
+                            </div>
+                            Terverifikasi
+                        </span>
+                    </div>
+
+                    <div class="badge-demo">
+                        <div class="badge-demo-title">Accepted</div>
+                        <span class="status-badge-alt status-accepted">
+                            <div class="icon-circle">
+                                <i class="bi bi-check2-all"></i>
+                            </div>
+                            Diterima
+                        </span>
+                    </div>
+
+                    <div class="badge-demo">
+                        <div class="badge-demo-title">Rejected</div>
+                        <span class="status-badge-alt status-rejected">
+                            <div class="icon-circle">
+                                <i class="bi bi-x-circle"></i>
+                            </div>
+                            Ditolak
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Color Palette -->
+        <div class="preview-card">
+            <div class="preview-section">
+                <h3><i class="bi bi-palette"></i> Color Palette</h3>
+                <p class="text-muted mb-4">Gradient color schemes untuk setiap status</p>
+                
+                <div class="color-palette">
+                    <div class="color-swatch" style="background: linear-gradient(135deg, #64748b 0%, #475569 100%);">
+                        Draft<br>
+                        <small>#64748b → #475569</small>
+                    </div>
+                    <div class="color-swatch" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);">
+                        Submitted<br>
+                        <small>#06b6d4 → #0891b2</small>
+                    </div>
+                    <div class="color-swatch" style="background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);">
+                        Verified<br>
+                        <small>#2563eb → #1e40af</small>
+                    </div>
+                    <div class="color-swatch" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                        Accepted<br>
+                        <small>#10b981 → #059669</small>
+                    </div>
+                    <div class="color-swatch" style="background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);">
+                        Rejected<br>
+                        <small>#f43f5e → #e11d48</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table Demo -->
+        <div class="preview-card">
+            <div class="preview-section">
+                <h3><i class="bi bi-table"></i> Table Implementation Example</h3>
+                <p class="text-muted mb-4">Contoh penggunaan dalam tabel data</p>
+                
+                <div class="table-demo">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No. Registrasi</th>
+                                <th>Nama Lengkap</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>PPDB-2024-001</code></td>
+                                <td>Ahmad Fauzi</td>
+                                <td>
+                                    <span class="status-badge status-draft" data-tooltip="Status: Draft">
+                                        <i class="bi bi-file-earmark"></i>
+                                        Draft
+                                    </span>
+                                </td>
+                                <td><button class="btn btn-sm btn-outline-primary">Detail</button></td>
+                            </tr>
+                            <tr>
+                                <td><code>PPDB-2024-002</code></td>
+                                <td>Siti Nurhaliza</td>
+                                <td>
+                                    <span class="status-badge status-submitted" data-tooltip="Status: Disubmit">
+                                        <i class="bi bi-send"></i>
+                                        Disubmit
+                                    </span>
+                                </td>
+                                <td><button class="btn btn-sm btn-outline-primary">Detail</button></td>
+                            </tr>
+                            <tr>
+                                <td><code>PPDB-2024-003</code></td>
+                                <td>Budi Santoso</td>
+                                <td>
+                                    <span class="status-badge status-verified" data-tooltip="Status: Terverifikasi">
+                                        <i class="bi bi-check-circle"></i>
+                                        Terverifikasi
+                                    </span>
+                                </td>
+                                <td><button class="btn btn-sm btn-outline-primary">Detail</button></td>
+                            </tr>
+                            <tr>
+                                <td><code>PPDB-2024-004</code></td>
+                                <td>Dewi Lestari</td>
+                                <td>
+                                    <span class="status-badge status-accepted" data-tooltip="Status: Diterima">
+                                        <i class="bi bi-check2-all"></i>
+                                        Diterima
+                                    </span>
+                                </td>
+                                <td><button class="btn btn-sm btn-outline-primary">Detail</button></td>
+                            </tr>
+                            <tr>
+                                <td><code>PPDB-2024-005</code></td>
+                                <td>Eko Prasetyo</td>
+                                <td>
+                                    <span class="status-badge status-rejected" data-tooltip="Status: Ditolak">
+                                        <i class="bi bi-x-circle"></i>
+                                        Ditolak
+                                    </span>
+                                </td>
+                                <td><button class="btn btn-sm btn-outline-primary">Detail</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="preview-card">
+            <div class="preview-section">
+                <h3><i class="bi bi-check2-square"></i> Key Features</h3>
+                <p class="text-muted mb-4">Fitur-fitur utama status badge design system</p>
+                
+                <div class="features-list">
+                    <div class="feature-item">
+                        <i class="bi bi-palette-fill"></i>
+                        <span>Modern Gradient</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="bi bi-cursor-fill"></i>
+                        <span>Hover Effects</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="bi bi-play-circle-fill"></i>
+                        <span>Smooth Animations</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="bi bi-phone-fill"></i>
+                        <span>Fully Responsive</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="bi bi-universal-access"></i>
+                        <span>Accessible</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="bi bi-lightning-fill"></i>
+                        <span>High Performance</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="bi bi-chat-square-text-fill"></i>
+                        <span>Tooltips</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="bi bi-code-slash"></i>
+                        <span>Pure CSS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Code Examples -->
+        <div class="preview-card">
+            <div class="preview-section">
+                <h3><i class="bi bi-code-slash"></i> Usage Examples</h3>
+                <p class="text-muted mb-4">Cara penggunaan dalam kode</p>
+                
+                <h5 class="mt-4">HTML Structure:</h5>
+                <div class="code-block">
+&lt;span class="status-badge status-accepted" data-tooltip="Status: Diterima"&gt;
+    &lt;i class="bi bi-check2-all"&gt;&lt;/i&gt;
+    Diterima
+&lt;/span&gt;
+                </div>
+
+                <h5 class="mt-4">PHP Implementation:</h5>
+                <div class="code-block">
+$status_config = [
+    'accepted' => [
+        'label' => 'Diterima',
+        'class' => 'status-accepted',
+        'icon' => 'check2-all'
+    ],
+];
+
+$config = $status_config[$status];
+                </div>
+
+                <h5 class="mt-4">Include CSS:</h5>
+                <div class="code-block">
+&lt;link rel="stylesheet" href="/css/status-badges.css"&gt;
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="preview-card text-center">
+            <p class="text-muted mb-2">
+                <i class="bi bi-info-circle"></i> 
+                Status Badge Design System v1.0.0
+            </p>
+            <p class="text-muted small mb-0">
+                Created for SPMB-Plus Application | 2024
+            </p>
+        </div>
+    </div>
+</body>
+</html>

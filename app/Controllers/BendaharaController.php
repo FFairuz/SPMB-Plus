@@ -278,38 +278,24 @@ class BendaharaController extends BaseController
             $notes = $this->request->getPost('notes');
 
             try {
-                $payment = $this->paymentModel->where('applicant_id', $applicantId)->first();
                 $now = date('Y-m-d H:i:s');
                 $bendaharaId = session()->get('user_id');
 
-                if (!$payment) {
-                    $this->paymentModel->insert([
-                        'applicant_id' => $applicantId,
-                        'transfer_amount' => $paymentAmount,
-                        'transfer_date' => $paymentDate,
-                        'bank_name' => $paymentMethod,
-                        'payment_type' => $paymentType,
-                        'installment_number' => $installmentNumber,
-                        'notes' => $notes,
-                        'payment_status' => 'confirmed',
-                        'confirmed_at' => $now,
-                        'verified_by_bendahara' => $bendaharaId,
-                        'verified_at' => $now,
-                    ]);
-                } else {
-                    $this->paymentModel->update($payment['id'], [
-                        'transfer_amount' => $paymentAmount,
-                        'transfer_date' => $paymentDate,
-                        'bank_name' => $paymentMethod,
-                        'payment_type' => $paymentType,
-                        'installment_number' => $installmentNumber,
-                        'notes' => $notes,
-                        'payment_status' => 'confirmed',
-                        'confirmed_at' => $now,
-                        'verified_by_bendahara' => $bendaharaId,
-                        'verified_at' => $now,
-                    ]);
-                }
+                // ALWAYS INSERT NEW PAYMENT - Support multiple payments per applicant
+                $this->paymentModel->insert([
+                    'applicant_id' => $applicantId,
+                    'transfer_amount' => $paymentAmount,
+                    'transfer_date' => $paymentDate,
+                    'bank_name' => $paymentMethod,
+                    'payment_type' => $paymentType,
+                    'installment_number' => $installmentNumber,
+                    'notes' => $notes,
+                    'payment_status' => 'confirmed',
+                    'confirmed_at' => $now,
+                    'confirmed_by' => $bendaharaId,
+                    'verified_by_bendahara' => $bendaharaId,
+                    'verified_at' => $now,
+                ]);
 
                 session()->setFlashdata('success', 'Pembayaran offline berhasil dicatat.');
                 return redirect()->to('/bendahara/verifikasi-pembayaran');
@@ -334,7 +320,20 @@ class BendaharaController extends BaseController
         $this->requireBendahara();
 
         if ($paymentId) {
-            $payment = $this->paymentModel->find($paymentId);
+            // Get payment data with applicant details
+            $payment = $this->paymentModel
+                ->select('payments.*, 
+                         applicants_dapodik.nama_lengkap, 
+                         applicants_dapodik.nomor_pendaftaran,
+                         applicants_dapodik.asal_sekolah,
+                         applicants_dapodik.jenis_kelamin,
+                         applicants_dapodik.alamat_jalan,
+                         applicants_dapodik.nomor_hp,
+                         users.username as confirmed_by_username')
+                ->join('applicants_dapodik', 'applicants_dapodik.id = payments.applicant_id', 'LEFT')
+                ->join('users', 'users.id = payments.confirmed_by', 'LEFT')
+                ->where('payments.id', $paymentId)
+                ->first();
 
             if (!$payment) {
                 session()->setFlashdata('error', 'Data pembayaran tidak ditemukan.');

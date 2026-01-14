@@ -1,0 +1,58 @@
+/* ============================================
+   STATUS BADGES - GRADIENT VARIANT (Optional)
+   Use this file if you want gradient version
+   ============================================ */
+
+/* GRADIENT VERSION - Add class 'status-badge-gradient' */
+.status-badge-gradient {
+    background: linear-gradient(135deg, var(--status-color) 0%, var(--status-color-dark) 100%);
+    color: white !important;
+    border-color: var(--status-color-dark) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.status-badge-gradient:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* DRAFT - Gradient */
+.status-badge-gradient.status-draft {
+    --status-color: #64748b;
+    --status-color-dark: #475569;
+}
+
+/* SUBMITTED - Gradient */
+.status-badge-gradient.status-submitted {
+    --status-color: #06b6d4;
+    --status-color-dark: #0891b2;
+}
+
+/* VERIFIED - Gradient */
+.status-badge-gradient.status-verified {
+    --status-color: #2563eb;
+    --status-color-dark: #1e40af;
+}
+
+/* ACCEPTED - Gradient */
+.status-badge-gradient.status-accepted {
+    --status-color: #10b981;
+    --status-color-dark: #059669;
+}
+
+/* REJECTED - Gradient */
+.status-badge-gradient.status-rejected {
+    --status-color: #f43f5e;
+    --status-color-dark: #e11d48;
+}
+
+/* DITOLAK - Gradient */
+.status-badge-gradient.status-ditolak {
+    --status-color: #64748b;
+    --status-color-dark: #475569;
+}
+
+/* DITERIMA - Gradient */
+.status-badge-gradient.status-diterima {
+    --status-color: #10b981;
+    --status-color-dark: #059669;
+}

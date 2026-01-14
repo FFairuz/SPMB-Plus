@@ -37,6 +37,14 @@
             <i class="fas fa-school"></i>
             <span>Kelola Asal Sekolah</span>
         </a>
+        <a href="<?= base_url('admin/majors') ?>" class="nav-link <?= (strpos(current_url(), 'admin/majors') !== false) ? 'active' : '' ?>">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Kelola Jurusan</span>
+        </a>
+        <a href="<?= base_url('admin/hobbies') ?>" class="nav-link <?= (strpos(current_url(), 'admin/hobbies') !== false) ? 'active' : '' ?>">
+            <i class="fas fa-star"></i>
+            <span>Kelola Hobi</span>
+        </a>
     </div>
 </aside>
 <?php endif; ?>

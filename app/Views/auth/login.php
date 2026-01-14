@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - PPDB</title>
+    <title>Login - <?= app_name() ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="<?= base_url('css/readability.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/dynamic-logo.css') ?>">
     <style>
         * {
             margin: 0;
@@ -116,12 +118,14 @@
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 15px;
+            color: white;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         .login-left p {
             font-size: 1.1rem;
-            opacity: 0.95;
+            color: white;
+            opacity: 1;
             line-height: 1.6;
             margin-bottom: 30px;
         }
@@ -137,7 +141,8 @@
             display: flex;
             align-items: center;
             font-size: 1rem;
-            opacity: 0.95;
+            color: white;
+            opacity: 1;
         }
 
         .feature-list li i {
@@ -150,6 +155,11 @@
             align-items: center;
             justify-content: center;
             border-radius: 8px;
+            color: white;
+        }
+
+        .feature-list li span {
+            color: white;
         }
 
         .login-right {
@@ -339,10 +349,19 @@
                 <div class="col-lg-5 login-left">
                     <div class="login-left-content">
                         <div class="logo-box">
-                            <i class="bi bi-mortarboard-fill"></i>
+                            <?php 
+                            $logo = app_logo();
+                            $appName = app_name();
+                            $appDesc = app_description();
+                            ?>
+                            <?php if (strpos($logo, 'default-logo.png') === false && file_exists(str_replace(base_url(), FCPATH, $logo))): ?>
+                                <img src="<?= $logo ?>" alt="<?= esc($appName) ?>" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                            <?php else: ?>
+                                <i class="bi bi-mortarboard-fill"></i>
+                            <?php endif; ?>
                         </div>
                         <h1>Selamat Datang!</h1>
-                        <p>Sistem Penerimaan Peserta Didik Baru Online</p>
+                        <p><?= esc($appDesc) ?></p>
                         
                         <ul class="feature-list">
                             <li>

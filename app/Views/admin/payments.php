@@ -153,6 +153,11 @@
                                             <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#rejectModal<?= $payment['id']; ?>">
                                                 <i class="bi bi-x-circle"></i> Tolak
                                             </button>
+                                        <?php elseif ($current_status === 'confirmed'): ?>
+                                            <a href="<?= base_url('admin/payment/print-receipt/' . $payment['id']); ?>" 
+                                               class="btn btn-sm btn-primary" target="_blank">
+                                                <i class="bi bi-printer-fill"></i> Cetak Bukti
+                                            </a>
                                         <?php else: ?>
                                             <a href="/admin/payments?status=submitted" class="btn btn-sm btn-secondary">
                                                 <i class="bi bi-arrow-left"></i> Kembali

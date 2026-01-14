@@ -1,0 +1,373 @@
+/* ============================================
+   STATUS BADGES - Modern Redesign
+   ============================================ */
+
+:root {
+    /* Status Colors - Adjusted to Match Design */
+    /* Draft - Dark Gray/Slate */
+    --status-draft: #64748b;
+    --status-draft-light: #f1f5f9;
+    --status-draft-dark: #475569;
+    
+    /* Submitted - Bright Cyan/Aqua */
+    --status-submitted: #06b6d4;
+    --status-submitted-light: #cffafe;
+    --status-submitted-dark: #0891b2;
+    
+    /* Verified - Royal Blue */
+    --status-verified: #2563eb;
+    --status-verified-light: #dbeafe;
+    --status-verified-dark: #1e40af;
+    
+    /* Accepted - Emerald Green */
+    --status-accepted: #10b981;
+    --status-accepted-light: #d1fae5;
+    --status-accepted-dark: #059669;
+    
+    /* Rejected - Rose/Pink Red */
+    --status-rejected: #f43f5e;
+    --status-rejected-light: #ffe4e6;
+    --status-rejected-dark: #e11d48;
+    
+    /* Ditolak - Same as Draft (Gray) */
+    --status-ditolak: #64748b;
+    --status-ditolak-light: #f1f5f9;
+    --status-ditolak-dark: #475569;
+    
+    /* Diterima - Same as Accepted (Green) */
+    --status-diterima: #10b981;
+    --status-diterima-light: #d1fae5;
+    --status-diterima-dark: #059669;
+}
+
+/* ============================================
+   MODERN STATUS BADGE DESIGN - WHITE/LIGHT VERSION
+   ============================================ */
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 50px;
+    border: 2px solid;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+    background: white;
+}
+
+.status-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.03), transparent);
+    transition: left 0.5s;
+}
+
+.status-badge:hover::before {
+    left: 100%;
+}
+
+.status-badge i {
+    font-size: 1rem;
+}
+
+.status-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   STATUS VARIANTS - WHITE/LIGHT DESIGN
+   ============================================ */
+
+/* DRAFT - Gray */
+.status-badge.status-draft {
+    background: white;
+    color: var(--status-draft);
+    border-color: var(--status-draft);
+}
+
+.status-badge.status-draft:hover {
+    background: var(--status-draft-light);
+    border-color: var(--status-draft-dark);
+    color: var(--status-draft-dark);
+}
+
+/* SUBMITTED - Cyan */
+.status-badge.status-submitted {
+    background: white;
+    color: var(--status-submitted);
+    border-color: var(--status-submitted);
+}
+
+.status-badge.status-submitted:hover {
+    background: var(--status-submitted-light);
+    border-color: var(--status-submitted-dark);
+    color: var(--status-submitted-dark);
+}
+
+/* VERIFIED - Blue */
+.status-badge.status-verified {
+    background: white;
+    color: var(--status-verified);
+    border-color: var(--status-verified);
+}
+
+.status-badge.status-verified:hover {
+    background: var(--status-verified-light);
+    border-color: var(--status-verified-dark);
+    color: var(--status-verified-dark);
+}
+
+/* ACCEPTED - Green */
+.status-badge.status-accepted {
+    background: white;
+    color: var(--status-accepted);
+    border-color: var(--status-accepted);
+}
+
+.status-badge.status-accepted:hover {
+    background: var(--status-accepted-light);
+    border-color: var(--status-accepted-dark);
+    color: var(--status-accepted-dark);
+}
+
+/* REJECTED - Red */
+.status-badge.status-rejected {
+    background: white;
+    color: var(--status-rejected);
+    border-color: var(--status-rejected);
+}
+
+.status-badge.status-rejected:hover {
+    background: var(--status-rejected-light);
+    border-color: var(--status-rejected-dark);
+    color: var(--status-rejected-dark);
+}
+
+/* DITOLAK - Gray (Indonesian) */
+.status-badge.status-ditolak {
+    background: white;
+    color: var(--status-ditolak);
+    border-color: var(--status-ditolak);
+}
+
+.status-badge.status-ditolak:hover {
+    background: var(--status-ditolak-light);
+    border-color: var(--status-ditolak-dark);
+    color: var(--status-ditolak-dark);
+}
+
+/* DITERIMA - Green (Indonesian) */
+.status-badge.status-diterima {
+    background: white;
+    color: var(--status-diterima);
+    border-color: var(--status-diterima);
+}
+
+.status-badge.status-diterima:hover {
+    background: var(--status-diterima-light);
+    border-color: var(--status-diterima-dark);
+    color: var(--status-diterima-dark);
+}
+
+/* ============================================
+   ALTERNATIVE STYLE - FLAT WITH ICON CIRCLE
+   ============================================ */
+
+.status-badge-alt {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.status-badge-alt .icon-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+/* DRAFT - Alternative */
+.status-badge-alt.status-draft {
+    background: var(--status-draft-light);
+    color: var(--status-draft-dark);
+    border: 2px solid var(--status-draft);
+}
+
+.status-badge-alt.status-draft .icon-circle {
+    background: var(--status-draft);
+    color: white;
+}
+
+/* SUBMITTED - Alternative */
+.status-badge-alt.status-submitted {
+    background: var(--status-submitted-light);
+    color: var(--status-submitted-dark);
+    border: 2px solid var(--status-submitted);
+}
+
+.status-badge-alt.status-submitted .icon-circle {
+    background: var(--status-submitted);
+    color: white;
+}
+
+/* VERIFIED - Alternative */
+.status-badge-alt.status-verified {
+    background: var(--status-verified-light);
+    color: var(--status-verified-dark);
+    border: 2px solid var(--status-verified);
+}
+
+.status-badge-alt.status-verified .icon-circle {
+    background: var(--status-verified);
+    color: white;
+}
+
+/* ACCEPTED - Alternative */
+.status-badge-alt.status-accepted {
+    background: var(--status-accepted-light);
+    color: var(--status-accepted-dark);
+    border: 2px solid var(--status-accepted);
+}
+
+.status-badge-alt.status-accepted .icon-circle {
+    background: var(--status-accepted);
+    color: white;
+}
+
+/* REJECTED - Alternative */
+.status-badge-alt.status-rejected {
+    background: var(--status-rejected-light);
+    color: var(--status-rejected-dark);
+    border: 2px solid var(--status-rejected);
+}
+
+.status-badge-alt.status-rejected .icon-circle {
+    background: var(--status-rejected);
+    color: white;
+}
+
+/* DITOLAK - Alternative (Indonesian) */
+.status-badge-alt.status-ditolak {
+    background: var(--status-ditolak-light);
+    color: var(--status-ditolak-dark);
+    border: 2px solid var(--status-ditolak);
+}
+
+.status-badge-alt.status-ditolak .icon-circle {
+    background: var(--status-ditolak);
+    color: white;
+}
+
+/* DITERIMA - Alternative (Indonesian) */
+.status-badge-alt.status-diterima {
+    background: var(--status-diterima-light);
+    color: var(--status-diterima-dark);
+    border: 2px solid var(--status-diterima);
+}
+
+.status-badge-alt.status-diterima .icon-circle {
+    background: var(--status-diterima);
+    color: white;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+    .status-badge,
+    .status-badge-alt {
+        font-size: 0.8rem;
+        padding: 0.5rem 1rem;
+    }
+    
+    .status-badge i {
+        font-size: 0.9rem;
+    }
+    
+    .status-badge-alt .icon-circle {
+        width: 28px;
+        height: 28px;
+        font-size: 0.9rem;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+.status-badge:focus,
+.status-badge-alt:focus {
+    outline: 3px solid rgba(13, 110, 253, 0.25);
+    outline-offset: 2px;
+}
+
+/* ============================================
+   ANIMATION VARIANTS
+   ============================================ */
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.status-badge,
+.status-badge-alt {
+    animation: slideIn 0.3s ease-out;
+}
+
+/* ============================================
+   TOOLTIP FOR STATUS
+   ============================================ */
+
+.status-badge[data-tooltip],
+.status-badge-alt[data-tooltip] {
+    position: relative;
+}
+
+.status-badge[data-tooltip]::after,
+.status-badge-alt[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    border-radius: 6px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.status-badge[data-tooltip]:hover::after,
+.status-badge-alt[data-tooltip]:hover::after {
+    opacity: 1;
+}

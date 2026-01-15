@@ -126,3 +126,63 @@ nb-configuration.xml
 /phpunit*.xml
 /.phpunit.*.cache
 
+#-------------------------
+# Custom Development Files
+#-------------------------
+# Testing & Debug files
+test_*.php
+check_*.php
+fix_*.php
+debug_*.php
+
+# Backup files
+backup_*/
+*.bak
+
+# Temporary files
+*.tmp
+cookies.txt
+migrate_output.txt
+
+# Development documentation (too many)
+*_SUMMARY.md
+*_CHECKLIST.md
+*_GUIDE.md
+*_REPORT.md
+*_UPDATE.md
+*_FIX.md
+*_COMPLETE.md
+*_COMPARISON.md
+BEFORE_AFTER_*.md
+CARA_*.md
+CLEAN_CODE_*.md
+COMPLETION_*.md
+DASHBOARD_*.md
+DEVELOPER_*.md
+DOKUMENTASI_*.md
+FIX_*.md
+INDEX_*.md
+KELOLA_*.md
+MENU_*.md
+PERBAIKAN_*.md
+QUICK_*.md
+README_*.md
+SOLUSI_*.md
+START_*.md
+TESTING_*.md
+TROUBLESHOOTING_*.md
+STATUS_*.txt
+QUICK_FIX.txt
+
+# Batch files (Windows scripts)
+*.bat
+!SETUP_DATABASE.bat
+!START_MYSQL.bat
+
+# SQL dumps & test data
+*.sql
+!app/Database/Seeds/*.sql
+
+# Cleanup script (keep for future use)
+# cleanup.sh
+

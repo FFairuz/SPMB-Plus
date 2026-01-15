@@ -1164,6 +1164,10 @@
                         <i class="bi bi-gear-fill"></i>
                         <span>Pengaturan Aplikasi</span>
                     </a>
+                    <a href="<?= base_url('admin/form-management') ?>" class="nav-link <?= (strpos(current_url(), 'admin/form-management') !== false) ? 'active' : '' ?>">
+                        <i class="bi bi-ui-checks"></i>
+                        <span>Manajemen Formulir</span>
+                    </a>
 
                     <div class="sidebar-divider"></div>
 

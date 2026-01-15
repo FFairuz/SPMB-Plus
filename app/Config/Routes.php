@@ -12,6 +12,72 @@ $routes->get('test-session', function() {
     return view('test_session');
 });
 
+// Test login page
+$routes->get('test-login', function() {
+    return view('test_login_access');
+});
+
+// Test tambah siswa view (no auth)
+$routes->get('test-tambah-siswa-view', function() {
+    $majorModel = new \App\Models\Major();
+    $hobbyModel = new \App\Models\Hobby();
+    $schoolModel = new \App\Models\School();
+    
+    return view('panitia/tambah_siswa', [
+        'title' => 'Test Tambah Siswa',
+        'majors' => $majorModel->getActiveMajors(),
+        'hobbies' => $hobbyModel->getActiveHobbies(),
+        'schools' => $schoolModel->findAll(),
+        'validation' => null
+    ]);
+});
+
+// Test lihat siswa view (no auth)
+$routes->get('test-lihat-siswa/(:num)', function($id) {
+    $applicantModel = new \App\Models\Applicant();
+    $paymentModel = new \App\Models\PaymentModel();
+    
+    $applicant = $applicantModel->find($id);
+    if (!$applicant) {
+        return "Data siswa dengan ID $id tidak ditemukan";
+    }
+    
+    $payment = $paymentModel->where('applicant_id', $id)->first();
+    
+    return view('panitia/lihat_siswa', [
+        'title' => 'Detail Siswa',
+        'applicant' => $applicant,
+        'payment' => $payment
+    ]);
+});
+
+// Test cetak pendaftaran (no auth)
+$routes->get('test-cetak-pendaftaran/(:num)', function($id) {
+    $applicantModel = new \App\Models\Applicant();
+    
+    $applicant = $applicantModel->find($id);
+    if (!$applicant) {
+        return "Data siswa dengan ID $id tidak ditemukan";
+    }
+    
+    // Get kop surat data
+    $kopSuratModel = new \App\Models\KopSurat();
+    $kopSurat = $kopSuratModel->first() ?? [
+        'school_name' => 'SEKOLAH MENENGAH ATAS NEGERI',
+        'address' => 'Jl. Pendidikan No. 123, Jakarta Selatan 12000',
+        'phone' => '(021) 1234-5678',
+        'email' => 'info@sekolah.sch.id',
+        'npsn' => '20123456',
+        'logo_path' => null,
+    ];
+    
+    return view('panitia/cetak_pendaftaran', [
+        'title' => 'Cetak Formulir Pendaftaran',
+        'applicant' => $applicant,
+        'kopSurat' => $kopSurat,
+    ]);
+});
+
 // Debug routes
 $routes->get('debug/users', 'Debug::users');
 $routes->get('debug/roles', 'Debug::roles');
@@ -199,3 +265,33 @@ $routes->get('test/sidebar-inspect', 'SidebarTest::inspect');
 $routes->get('payment/print-receipt/(:num)', 'PaymentController::printReceipt/$1');
 $routes->get('applicant/payment/print-receipt/(:num)', 'PaymentController::printReceipt/$1');
 $routes->get('admin/payment/print-receipt/(:num)', 'PaymentController::printReceipt/$1');
+
+// Admin Routes (Form Management) - tanpa filter, gunakan manual check di controller
+$routes->group('admin', function($routes) {
+    // Form Management Routes
+    $routes->get('form-management', 'FormManagementController::index');
+    $routes->post('form-management/update', 'FormManagementController::update');
+    $routes->post('form-management/update-bulk', 'FormManagementController::updateBulk');
+    $routes->post('form-management/update-required-fields', 'FormManagementController::updateRequiredFields');
+    $routes->post('form-management/toggle-status', 'FormManagementController::toggleStatus');
+    $routes->get('form-management/statistics', 'FormManagementController::statistics');
+});
+
+// Test form management (no auth)
+$routes->get('test-form-management', function() {
+    $formSettingModel = new \App\Models\FormSettingModel();
+    $applicantModel = new \App\Models\Applicant();
+    
+    return view('admin/form_management/index', [
+        'title' => 'Test Manajemen Formulir',
+        'settings' => $formSettingModel->findAll(),
+        'allSettings' => $formSettingModel->getAllSettings(),
+        'totalApplicants' => $applicantModel->countAllResults(),
+        'formStatus' => $formSettingModel->isFormActive(),
+    ]);
+});
+
+// Debug routes for form management
+$routes->get('debug/form-management/check', 'DebugFormManagement::checkAccess');
+$routes->get('debug/form-management/test', 'DebugFormManagement::testDirect');
+$routes->get('debug/form-management/users', 'DebugFormManagement::checkUsers');

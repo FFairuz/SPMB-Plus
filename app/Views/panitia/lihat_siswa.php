@@ -2,351 +2,621 @@
 
 <?= $this->section('title'); ?>Detail Siswa<?= $this->endSection(); ?>
 
-<?= $this->section('styles'); ?>
-<link rel="stylesheet" href="/css/status-badges.css">
-<?= $this->endSection(); ?>
-
 <?= $this->section('content'); ?>
-<style>
-    .page-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 2rem 0;
-        margin: -1.5rem -1.5rem 2rem -1.5rem;
-        border-radius: 0 0 1rem 1rem;
-    }
-    .page-header a {
-        color: white;
-        text-decoration: none;
-        transition: opacity 0.3s;
-    }
-    .page-header a:hover {
-        opacity: 0.8;
-    }
-    .form-section {
-        background: white;
-        border-radius: 0.75rem;
-        padding: 2rem;
-        margin-bottom: 2rem;
-        border: 1px solid #e9ecef;
-        box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
-    }
-    .form-section h5 {
-        color: #667eea;
-        font-weight: 700;
-        margin-bottom: 1.5rem;
-        padding-bottom: 1rem;
-        border-bottom: 2px solid #667eea;
-    }
-    .form-row {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
-    .form-group {
-        display: flex;
-        flex-direction: column;
-    }
-    .form-group label {
-        font-weight: 600;
-        color: #495057;
-        margin-bottom: 0.5rem;
-        font-size: 0.95rem;
-    }
-    .form-group p {
-        color: #212529;
-        padding: 0.75rem;
-        background-color: #f8f9fa;
-        border-radius: 0.5rem;
-        border-left: 4px solid #667eea;
-        margin: 0;
-    }
-    /* Status badge styles moved to /css/status-badges.css */
-    .info-card {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 1.5rem;
-        border-radius: 0.75rem;
-        margin-bottom: 2rem;
-    }
-    .info-card h6 {
-        margin: 0;
-        font-weight: 600;
-        opacity: 0.9;
-    }
-    .info-card .big-text {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-top: 0.5rem;
-    }
-    .action-buttons {
-        display: flex;
-        gap: 0.75rem;
-        margin-top: 2rem;
-        flex-wrap: wrap;
-        padding: 1.5rem;
-        background-color: #f8f9fa;
-        border-radius: 0.5rem;
-        border-left: 4px solid #667eea;
-    }
-    .action-buttons .btn {
-        padding: 0.75rem 1.5rem;
-        font-weight: 600;
-        border: none;
-        border-radius: 0.375rem;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        white-space: nowrap;
-    }
-    .action-buttons .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-    .action-buttons .btn-primary {
-        background-color: #0d6efd;
-        color: white;
-    }
-    .action-buttons .btn-primary:hover {
-        background-color: #0b5ed7;
-    }
-    .action-buttons .btn-success {
-        background-color: #198754;
-        color: white;
-    }
-    .action-buttons .btn-success:hover {
-        background-color: #157347;
-    }
-    .action-buttons .btn-danger {
-        background-color: #dc3545;
-        color: white;
-    }
-    .action-buttons .btn-danger:hover {
-        background-color: #bb2d3b;
-    }
-    .action-buttons .btn-warning {
-        background-color: #ffc107;
-        color: #000;
-    }
-    .action-buttons .btn-warning:hover {
-        background-color: #ffb800;
-    }
-    .action-buttons .btn-secondary {
-        background-color: #6c757d;
-        color: white;
-    }
-    .action-buttons .btn-secondary:hover {
-        background-color: #5c636a;
-    }
-</style>
-
-<div class="page-header">
-    <div class="container-fluid">
-        <div class="d-flex align-items-center justify-content-between">
-            <div>
-                <h2 style="margin: 0; font-weight: 700;">
-                    <i class="bi bi-person-circle"></i> Detail Siswa Pendaftar
-                </h2>
-                <p style="margin: 0.5rem 0 0 0; opacity: 0.95;">
-                    Lihat informasi lengkap dan verifikasi data pendaftar
-                </p>
-            </div>
-            <a href="/panitia/verifikasi-pendaftar" class="btn btn-light">
-                <i class="bi bi-arrow-left"></i> Kembali
+<div class="container-fluid py-4">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="mb-1">
+                <i class="fas fa-user-circle text-primary"></i> Detail Siswa
+            </h3>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="<?= base_url('panitia/dashboard') ?>">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="<?= base_url('panitia/daftar-siswa') ?>">Daftar Siswa</a></li>
+                    <li class="breadcrumb-item active">Detail Siswa</li>
+                </ol>
+            </nav>
+        </div>
+        <div>
+            <a href="<?= base_url('panitia/daftar-siswa') ?>" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-1"></i> Kembali
+            </a>
+            <a href="<?= base_url('panitia/edit_siswa/' . $applicant['id']) ?>" class="btn btn-warning">
+                <i class="fas fa-edit me-1"></i> Edit
+            </a>
+            <a href="<?= base_url('panitia/cetak-pendaftaran/' . $applicant['id']) ?>" class="btn btn-primary" target="_blank">
+                <i class="fas fa-print me-1"></i> Cetak
             </a>
         </div>
     </div>
-</div>
 
-<?php if ($applicant): ?>
-
-<!-- Info Card -->
-<div class="info-card">
-    <div class="row">
-        <div class="col-md-8">
-            <h6>Nomor Pendaftaran</h6>
-            <div class="big-text"><?= $applicant['nomor_pendaftaran'] ?? '-'; ?></div>
+    <!-- Alert Messages -->
+    <?php if (session()->getFlashdata('success')): ?>
+        <div class="alert alert-success alert-dismissible fade show">
+            <i class="fas fa-check-circle me-2"></i>
+            <?= session()->getFlashdata('success') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
-        <div class="col-md-4 text-end">
-            <h6>Status</h6>
-            <?php
-            $status = strtolower($applicant['status'] ?? 'submitted');
-            $status_config = [
-                'draft' => ['label' => 'Draft', 'class' => 'status-draft', 'icon' => 'file-earmark'],
-                'pending' => ['label' => 'Menunggu', 'class' => 'status-draft', 'icon' => 'clock'],
-                'submitted' => ['label' => 'Disubmit', 'class' => 'status-submitted', 'icon' => 'send'],
-                'verified' => ['label' => 'Terverifikasi', 'class' => 'status-verified', 'icon' => 'check-circle'],
-                'accepted' => ['label' => 'Diterima', 'class' => 'status-accepted', 'icon' => 'check2-all'],
-                'rejected' => ['label' => 'Ditolak', 'class' => 'status-rejected', 'icon' => 'x-circle'],
-            ];
-            $config = $status_config[$status] ?? ['label' => ucfirst($status), 'class' => 'status-draft', 'icon' => 'question'];
-            ?>
-            <span class="status-badge <?= $config['class']; ?>" data-tooltip="Status: <?= $config['label']; ?>">
-                <i class="bi bi-<?= $config['icon']; ?>"></i>
-                <?= $config['label']; ?>
-            </span>
-        </div>
-    </div>
-</div>
-
-<!-- Data Pribadi -->
-<div class="form-section">
-    <h5><i class="bi bi-person"></i> Data Pribadi</h5>
-    <div class="form-row">
-        <div class="form-group">
-            <label>Nama Lengkap</label>
-            <p><?= $applicant['nama_lengkap'] ?? '-'; ?></p>
-        </div>
-        <div class="form-group">
-            <label>NIK</label>
-            <p><?= $applicant['nik'] ?? '-'; ?></p>
-        </div>
-        <div class="form-group">
-            <label>Jenis Kelamin</label>
-            <p><?= ucfirst($applicant['jenis_kelamin'] ?? '-'); ?></p>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group">
-            <label>Tanggal Lahir</label>
-            <p><?= $applicant['tanggal_lahir'] ? date('d M Y', strtotime($applicant['tanggal_lahir'])) : '-'; ?></p>
-        </div>
-        <div class="form-group">
-            <label>Tempat Lahir</label>
-            <p><?= $applicant['tempat_lahir'] ?? '-'; ?></p>
-        </div>
-        <div class="form-group">
-            <label>Agama</label>
-            <p><?= $applicant['agama'] ?? '-'; ?></p>
-        </div>
-    </div>
-</div>
-
-<!-- Data Keluarga -->
-<div class="form-section">
-    <h5><i class="bi bi-people"></i> Data Keluarga</h5>
-    <div class="form-row">
-        <div class="form-group">
-            <label>Anak Ke-</label>
-            <p><?= $applicant['anak_ke'] ?? '-'; ?></p>
-        </div>
-        <div class="form-group">
-            <label>Jumlah Saudara</label>
-            <p><?= $applicant['jumlah_saudara'] ?? '-'; ?></p>
-        </div>
-    </div>
-</div>
-
-<!-- Alamat -->
-<div class="form-section">
-    <h5><i class="bi bi-geo-alt"></i> Alamat</h5>
-    <div class="form-row">
-        <div class="form-group">
-            <label>Alamat Jalan</label>
-            <p><?= $applicant['alamat_jalan'] ?? '-'; ?></p>
-        </div>
-        <div class="form-group">
-            <label>Dusun</label>
-            <p><?= $applicant['dusun'] ?? '-'; ?></p>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group">
-            <label>Kelurahan</label>
-            <p><?= $applicant['kelurahan'] ?? '-'; ?></p>
-        </div>
-        <div class="form-group">
-            <label>Kecamatan</label>
-            <p><?= $applicant['kecamatan'] ?? '-'; ?></p>
-        </div>
-        <div class="form-group">
-            <label>Kabupaten</label>
-            <p><?= $applicant['kabupaten'] ?? '-'; ?></p>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group">
-            <label>Provinsi</label>
-            <p><?= $applicant['provinsi'] ?? '-'; ?></p>
-        </div>
-        <div class="form-group">
-            <label>Kode Pos</label>
-            <p><?= $applicant['kode_pos'] ?? '-'; ?></p>
-        </div>
-    </div>
-</div>
-
-<!-- Kontak -->
-<div class="form-section">
-    <h5><i class="bi bi-telephone"></i> Kontak</label>
-    <div class="form-row">
-        <div class="form-group">
-            <label>Nomor HP</label>
-            <p><?= $applicant['nomor_hp'] ?? '-'; ?></p>
-        </div>
-    </div>
-</div>
-
-<!-- Asal Sekolah -->
-<div class="form-section">
-    <h5><i class="bi bi-book"></i> Asal Sekolah</h5>
-    <div class="form-row">
-        <div class="form-group">
-            <label>Nama Sekolah</label>
-            <p><?= $applicant['asal_sekolah'] ?? '-'; ?></p>
-        </div>
-        <div class="form-group">
-            <label>NPSN Sekolah</label>
-            <p><?= $applicant['npsn_sekolah_asal'] ?? '-'; ?></p>
-        </div>
-    </div>
-</div>
-
-<!-- Data Orang Tua -->
-<div class="form-section">
-    <h5><i class="bi bi-person-badge"></i> Data Orang Tua</h5>
-    <div class="form-row">
-        <div class="form-group">
-            <label>Nama Ayah</label>
-            <p><?= $applicant['nama_ayah'] ?? '-'; ?></p>
-        </div>
-        <div class="form-group">
-            <label>Nama Ibu</label>
-            <p><?= $applicant['nama_ibu'] ?? '-'; ?></p>
-        </div>
-    </div>
-</div>
-
-<!-- Action Buttons -->
-<div class="action-buttons">
-    <a href="/panitia/edit_siswa/<?= $applicant['id']; ?>" class="btn btn-warning">
-        <i class="bi bi-pencil"></i> Edit Data
-    </a>
-    <?php if ($applicant['status'] !== 'verified'): ?>
-    <a href="/panitia/verifikasi-pendaftar/<?= $applicant['id']; ?>" class="btn btn-success">
-        <i class="bi bi-check-circle"></i> Verifikasi
-    </a>
-    <?php else: ?>
-    <a href="/panitia/cetak-pendaftaran/<?= $applicant['id']; ?>" class="btn btn-primary">
-        <i class="bi bi-printer"></i> Cetak Formulir
-    </a>
-    <a href="/panitia/batal-verifikasi/<?= $applicant['id']; ?>" class="btn btn-danger" onclick="return confirm('Batalkan verifikasi? Data akan kembali ke status Submitted.');">
-        <i class="bi bi-arrow-counterclockwise"></i> Batal Verifikasi
-    </a>
     <?php endif; ?>
-    <a href="/panitia/daftar-siswa" class="btn btn-secondary">
-        <i class="bi bi-arrow-left"></i> Kembali ke Daftar
-    </a>
+
+    <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger alert-dismissible fade show">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <?= session()->getFlashdata('error') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    <?php endif; ?>
+
+    <div class="row">
+        <!-- Left Column: Student Info -->
+        <div class="col-lg-8">
+            <!-- Card 1: Data Pribadi -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-user me-2"></i> Data Pribadi Siswa</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Nomor Pendaftaran</label>
+                            <h6 class="fw-bold text-primary"><?= esc($applicant['nomor_pendaftaran'] ?? '-') ?></h6>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Status Pendaftaran</label>
+                            <h6>
+                                <?php
+                                $status = $applicant['status'] ?? 'pending';
+                                $statusClass = [
+                                    'pending' => 'warning',
+                                    'verified' => 'success',
+                                    'rejected' => 'danger',
+                                    'draft' => 'secondary'
+                                ];
+                                $statusText = [
+                                    'pending' => 'Menunggu Verifikasi',
+                                    'verified' => 'Terverifikasi',
+                                    'rejected' => 'Ditolak',
+                                    'draft' => 'Draft'
+                                ];
+                                ?>
+                                <span class="badge bg-<?= $statusClass[$status] ?? 'secondary' ?>">
+                                    <?= $statusText[$status] ?? ucfirst($status) ?>
+                                </span>
+                            </h6>
+                        </div>
+                    </div>
+
+                    <hr class="my-3">
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">NIK</label>
+                            <p class="mb-0 fw-semibold"><?= esc($applicant['nik'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">NIS</label>
+                            <p class="mb-0 fw-semibold"><?= esc($applicant['nis'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="text-muted small mb-1">Nama Lengkap</label>
+                            <p class="mb-0 fw-semibold fs-5 text-primary"><?= esc($applicant['nama_lengkap'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Nama Panggilan</label>
+                            <p class="mb-0"><?= esc($applicant['nama_panggilan'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Jenis Kelamin</label>
+                            <p class="mb-0">
+                                <i class="fas fa-<?= ($applicant['jenis_kelamin'] ?? '') === 'laki-laki' ? 'mars text-primary' : 'venus text-danger' ?>"></i>
+                                <?= esc(ucwords($applicant['jenis_kelamin'] ?? '-')) ?>
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Tempat Lahir</label>
+                            <p class="mb-0"><?= esc($applicant['tempat_lahir'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Tanggal Lahir</label>
+                            <p class="mb-0">
+                                <?php
+                                if (!empty($applicant['tanggal_lahir'])) {
+                                    $tgl = date_create($applicant['tanggal_lahir']);
+                                    echo date_format($tgl, 'd F Y');
+                                    
+                                    // Calculate age
+                                    $today = date_create('today');
+                                    $age = date_diff($tgl, $today)->y;
+                                    echo " <span class='text-muted'>($age tahun)</span>";
+                                } else {
+                                    echo '-';
+                                }
+                                ?>
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Agama</label>
+                            <p class="mb-0"><?= esc($applicant['agama'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Status Keluarga</label>
+                            <p class="mb-0"><?= esc($applicant['status_keluarga'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="text-muted small mb-1">Anak Ke-</label>
+                            <p class="mb-0 fw-semibold"><?= esc($applicant['anak_ke'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="text-muted small mb-1">Jumlah Saudara</label>
+                            <p class="mb-0 fw-semibold"><?= esc($applicant['jumlah_saudara'] ?? '0') ?></p>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="text-muted small mb-1">Tinggi Badan</label>
+                            <p class="mb-0"><?= !empty($applicant['tinggi_badan']) ? esc($applicant['tinggi_badan']) . ' cm' : '-' ?></p>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="text-muted small mb-1">Berat Badan</label>
+                            <p class="mb-0"><?= !empty($applicant['berat_badan']) ? esc($applicant['berat_badan']) . ' kg' : '-' ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Alamat -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i> Alamat Lengkap</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <label class="text-muted small mb-1">Alamat Jalan</label>
+                            <p class="mb-0"><?= esc($applicant['alamat_jalan'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Dusun</label>
+                            <p class="mb-0"><?= esc($applicant['dusun'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Kelurahan/Desa</label>
+                            <p class="mb-0"><?= esc($applicant['kelurahan'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Kecamatan</label>
+                            <p class="mb-0"><?= esc($applicant['kecamatan'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Kabupaten/Kota</label>
+                            <p class="mb-0"><?= esc($applicant['kabupaten'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Provinsi</label>
+                            <p class="mb-0"><?= esc($applicant['provinsi'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Kode Pos</label>
+                            <p class="mb-0"><?= esc($applicant['kode_pos'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Nomor Telepon</label>
+                            <p class="mb-0">
+                                <?php if (!empty($applicant['nomor_telepon'])): ?>
+                                    <i class="fas fa-phone me-1"></i><?= esc($applicant['nomor_telepon']) ?>
+                                <?php else: ?>
+                                    -
+                                <?php endif; ?>
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Nomor HP</label>
+                            <p class="mb-0">
+                                <?php if (!empty($applicant['nomor_hp'])): ?>
+                                    <i class="fas fa-mobile-alt me-1"></i><?= esc($applicant['nomor_hp']) ?>
+                                <?php else: ?>
+                                    -
+                                <?php endif; ?>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Data Orang Tua -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-users me-2"></i> Data Orang Tua / Wali</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Data Ayah -->
+                    <h6 class="text-secondary border-bottom pb-2 mb-3">
+                        <i class="fas fa-male me-2"></i> Data Ayah Kandung
+                    </h6>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Nama Ayah</label>
+                            <p class="mb-0 fw-semibold"><?= esc($applicant['nama_ayah'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">NIK Ayah</label>
+                            <p class="mb-0"><?= esc($applicant['nik_ayah'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Pendidikan Ayah</label>
+                            <p class="mb-0"><?= esc($applicant['pendidikan_ayah'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Pekerjaan Ayah</label>
+                            <p class="mb-0"><?= esc($applicant['pekerjaan_ayah'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Penghasilan Ayah</label>
+                            <p class="mb-0"><?= esc($applicant['penghasilan_ayah'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Nomor HP Ayah</label>
+                            <p class="mb-0">
+                                <?php if (!empty($applicant['nomor_hp_ayah'])): ?>
+                                    <i class="fas fa-mobile-alt me-1"></i><?= esc($applicant['nomor_hp_ayah']) ?>
+                                <?php else: ?>
+                                    -
+                                <?php endif; ?>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Data Ibu -->
+                    <h6 class="text-secondary border-bottom pb-2 mb-3">
+                        <i class="fas fa-female me-2"></i> Data Ibu Kandung
+                    </h6>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Nama Ibu</label>
+                            <p class="mb-0 fw-semibold"><?= esc($applicant['nama_ibu'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">NIK Ibu</label>
+                            <p class="mb-0"><?= esc($applicant['nik_ibu'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Pendidikan Ibu</label>
+                            <p class="mb-0"><?= esc($applicant['pendidikan_ibu'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Pekerjaan Ibu</label>
+                            <p class="mb-0"><?= esc($applicant['pekerjaan_ibu'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Penghasilan Ibu</label>
+                            <p class="mb-0"><?= esc($applicant['penghasilan_ibu'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Nomor HP Ibu</label>
+                            <p class="mb-0">
+                                <?php if (!empty($applicant['nomor_hp_ibu'])): ?>
+                                    <i class="fas fa-mobile-alt me-1"></i><?= esc($applicant['nomor_hp_ibu']) ?>
+                                <?php else: ?>
+                                    -
+                                <?php endif; ?>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Data Wali (jika ada) -->
+                    <?php if (!empty($applicant['nama_wali'])): ?>
+                        <h6 class="text-secondary border-bottom pb-2 mb-3">
+                            <i class="fas fa-user-shield me-2"></i> Data Wali
+                        </h6>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="text-muted small mb-1">Nama Wali</label>
+                                <p class="mb-0 fw-semibold"><?= esc($applicant['nama_wali']) ?></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="text-muted small mb-1">Hubungan dengan Wali</label>
+                                <p class="mb-0"><?= esc($applicant['hubungan_wali'] ?? '-') ?></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="text-muted small mb-1">Nomor HP Wali</label>
+                                <p class="mb-0">
+                                    <?php if (!empty($applicant['nomor_hp_wali'])): ?>
+                                        <i class="fas fa-mobile-alt me-1"></i><?= esc($applicant['nomor_hp_wali']) ?>
+                                    <?php else: ?>
+                                        -
+                                    <?php endif; ?>
+                                </p>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <!-- Card 4: Data Sekolah & Akademik -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0"><i class="fas fa-school me-2"></i> Data Sekolah & Akademik</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-8">
+                            <label class="text-muted small mb-1">Asal Sekolah</label>
+                            <p class="mb-0 fw-semibold"><?= esc($applicant['asal_sekolah'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="text-muted small mb-1">NPSN</label>
+                            <p class="mb-0"><?= esc($applicant['npsn_sekolah_asal'] ?? '-') ?></p>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="text-muted small mb-1">Nilai Rata-rata Raport</label>
+                            <p class="mb-0 fs-5 fw-bold text-success">
+                                <?= !empty($applicant['nilai_rata_rata']) ? number_format($applicant['nilai_rata_rata'], 2) : '-' ?>
+                            </p>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="text-muted small mb-1 fw-semibold">Nilai UN/Ujian Akhir:</label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="text-muted small mb-1">B. Indonesia</label>
+                            <p class="mb-0"><?= !empty($applicant['nilai_un_indo']) ? number_format($applicant['nilai_un_indo'], 2) : '-' ?></p>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="text-muted small mb-1">Matematika</label>
+                            <p class="mb-0"><?= !empty($applicant['nilai_un_math']) ? number_format($applicant['nilai_un_math'], 2) : '-' ?></p>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="text-muted small mb-1">B. Inggris</label>
+                            <p class="mb-0"><?= !empty($applicant['nilai_un_english']) ? number_format($applicant['nilai_un_english'], 2) : '-' ?></p>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="text-muted small mb-1">IPA</label>
+                            <p class="mb-0"><?= !empty($applicant['nilai_un_science']) ? number_format($applicant['nilai_un_science'], 2) : '-' ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5: Prestasi & Lainnya -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0"><i class="fas fa-trophy me-2"></i> Prestasi & Informasi Tambahan</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <label class="text-muted small mb-1">Prestasi Akademik</label>
+                            <p class="mb-0"><?= !empty($applicant['prestasi_akademik']) ? nl2br(esc($applicant['prestasi_akademik'])) : '<em class="text-muted">Tidak ada</em>' ?></p>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="text-muted small mb-1">Prestasi Non-Akademik</label>
+                            <p class="mb-0"><?= !empty($applicant['prestasi_non_akademik']) ? nl2br(esc($applicant['prestasi_non_akademik'])) : '<em class="text-muted">Tidak ada</em>' ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Kelainan Fisik</label>
+                            <p class="mb-0"><?= !empty($applicant['kelainan_fisik']) ? esc($applicant['kelainan_fisik']) : '<em class="text-muted">Tidak ada</em>' ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="text-muted small mb-1">Kebutuhan Khusus</label>
+                            <p class="mb-0"><?= !empty($applicant['kebutuhan_khusus_lainnya']) ? esc($applicant['kebutuhan_khusus_lainnya']) : '<em class="text-muted">Tidak ada</em>' ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 6: Catatan Verifikasi -->
+            <?php if (!empty($applicant['catatan_verifikasi'])): ?>
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0"><i class="fas fa-clipboard-list me-2"></i> Catatan Verifikasi</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-0"><?= nl2br(esc($applicant['catatan_verifikasi'])) ?></p>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <!-- Right Column: Summary & Actions -->
+        <div class="col-lg-4">
+            <!-- Status Summary Card -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i> Ringkasan Status</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="text-muted small mb-1">Status Pendaftaran</label>
+                        <h5>
+                            <span class="badge bg-<?= $statusClass[$status] ?? 'secondary' ?> w-100 py-2">
+                                <?= $statusText[$status] ?? ucfirst($status) ?>
+                            </span>
+                        </h5>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-muted small mb-1">Tanggal Daftar</label>
+                        <p class="mb-0">
+                            <i class="fas fa-calendar me-1"></i>
+                            <?php
+                            if (!empty($applicant['created_at'])) {
+                                echo date('d F Y, H:i', strtotime($applicant['created_at']));
+                            } else {
+                                echo '-';
+                            }
+                            ?>
+                        </p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-muted small mb-1">Tanggal Submit</label>
+                        <p class="mb-0">
+                            <i class="fas fa-calendar-check me-1"></i>
+                            <?php
+                            if (!empty($applicant['tanggal_submit'])) {
+                                echo date('d F Y, H:i', strtotime($applicant['tanggal_submit']));
+                            } else {
+                                echo '<em class="text-muted">Belum submit</em>';
+                            }
+                            ?>
+                        </p>
+                    </div>
+                    <div>
+                        <label class="text-muted small mb-1">Terakhir Update</label>
+                        <p class="mb-0">
+                            <i class="fas fa-clock me-1"></i>
+                            <?php
+                            if (!empty($applicant['updated_at'])) {
+                                echo date('d F Y, H:i', strtotime($applicant['updated_at']));
+                            } else {
+                                echo '-';
+                            }
+                            ?>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Info Card -->
+            <?php if (isset($payment) && !empty($payment)): ?>
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0"><i class="fas fa-money-bill-wave me-2"></i> Informasi Pembayaran</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="text-muted small mb-1">Status Pembayaran</label>
+                            <h5>
+                                <?php
+                                $paymentStatus = $payment['status'] ?? 'pending';
+                                $paymentStatusClass = [
+                                    'pending' => 'warning',
+                                    'confirmed' => 'success',
+                                    'rejected' => 'danger'
+                                ];
+                                $paymentStatusText = [
+                                    'pending' => 'Menunggu Konfirmasi',
+                                    'confirmed' => 'Sudah Dikonfirmasi',
+                                    'rejected' => 'Ditolak'
+                                ];
+                                ?>
+                                <span class="badge bg-<?= $paymentStatusClass[$paymentStatus] ?? 'secondary' ?> w-100 py-2">
+                                    <?= $paymentStatusText[$paymentStatus] ?? ucfirst($paymentStatus) ?>
+                                </span>
+                            </h5>
+                        </div>
+                        <div class="mb-3">
+                            <label class="text-muted small mb-1">Jumlah Pembayaran</label>
+                            <p class="mb-0 fs-5 fw-bold text-success">
+                                Rp <?= number_format($payment['amount'] ?? 0, 0, ',', '.') ?>
+                            </p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="text-muted small mb-1">Metode Pembayaran</label>
+                            <p class="mb-0"><?= esc(ucwords($payment['payment_method'] ?? '-')) ?></p>
+                        </div>
+                        <div>
+                            <label class="text-muted small mb-1">Tanggal Bayar</label>
+                            <p class="mb-0">
+                                <?php
+                                if (!empty($payment['payment_date'])) {
+                                    echo date('d F Y, H:i', strtotime($payment['payment_date']));
+                                } else {
+                                    echo '-';
+                                }
+                                ?>
+                            </p>
+                        </div>
+                        <?php if (!empty($payment['bukti_transfer'])): ?>
+                            <hr>
+                            <a href="<?= base_url('uploads/payments/' . $payment['bukti_transfer']) ?>" class="btn btn-sm btn-primary w-100" target="_blank">
+                                <i class="fas fa-image me-1"></i> Lihat Bukti Transfer
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php else: ?>
+                <div class="card shadow-sm mb-4 border-warning">
+                    <div class="card-body text-center">
+                        <i class="fas fa-exclamation-triangle text-warning fa-3x mb-3"></i>
+                        <h6 class="text-muted">Belum Ada Pembayaran</h6>
+                        <p class="small text-muted mb-0">Siswa belum melakukan pembayaran</p>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+            <!-- Actions Card -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0"><i class="fas fa-cogs me-2"></i> Aksi</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="<?= base_url('panitia/edit_siswa/' . $applicant['id']) ?>" class="btn btn-warning">
+                            <i class="fas fa-edit me-1"></i> Edit Data Siswa
+                        </a>
+                        <a href="<?= base_url('panitia/cetak-pendaftaran/' . $applicant['id']) ?>" class="btn btn-primary" target="_blank">
+                            <i class="fas fa-print me-1"></i> Cetak Formulir
+                        </a>
+                        <?php if ($status === 'pending'): ?>
+                            <a href="<?= base_url('panitia/verifikasi-pendaftar/' . $applicant['id']) ?>" class="btn btn-success">
+                                <i class="fas fa-check-circle me-1"></i> Verifikasi
+                            </a>
+                        <?php elseif ($status === 'verified'): ?>
+                            <a href="<?= base_url('panitia/batal-verifikasi/' . $applicant['id']) ?>" class="btn btn-secondary">
+                                <i class="fas fa-undo me-1"></i> Batal Verifikasi
+                            </a>
+                        <?php endif; ?>
+                        <hr class="my-2">
+                        <a href="<?= base_url('panitia/hapus_siswa/' . $applicant['id']) ?>" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus data siswa ini?')">
+                            <i class="fas fa-trash me-1"></i> Hapus Data
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documents Card -->
+            <?php if (!empty($applicant['dokumen_upload'])): ?>
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0"><i class="fas fa-file-alt me-2"></i> Dokumen</h5>
+                    </div>
+                    <div class="card-body">
+                        <?php
+                        $documents = json_decode($applicant['dokumen_upload'], true);
+                        if (is_array($documents) && count($documents) > 0):
+                        ?>
+                            <ul class="list-unstyled mb-0">
+                                <?php foreach ($documents as $doc): ?>
+                                    <li class="mb-2">
+                                        <a href="<?= base_url('uploads/documents/' . $doc) ?>" class="text-decoration-none" target="_blank">
+                                            <i class="fas fa-file-pdf text-danger me-2"></i>
+                                            <?= esc(basename($doc)) ?>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php else: ?>
+                            <p class="text-muted small mb-0 text-center">Tidak ada dokumen</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
 </div>
 
-<?php else: ?>
-<div class="alert alert-danger">
-    <i class="bi bi-exclamation-circle-fill"></i> Data siswa tidak ditemukan.
-</div>
-<?php endif; ?>
-
+<style>
+.card {
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+.card:hover {
+    transform: translateY(-2px);
+}
+.card-header h5 {
+    font-size: 1.1rem;
+}
+label.small {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+</style>
 <?= $this->endSection(); ?>

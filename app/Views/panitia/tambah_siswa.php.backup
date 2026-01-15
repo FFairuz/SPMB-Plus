@@ -1,0 +1,313 @@
+<?= $this->extend('layout/app'); ?>
+
+<?= $this->section('title'); ?>Tambah Siswa Baru<?= $this->endSection(); ?>
+
+<?= $this->section('content'); ?>
+<div class="container-fluid py-4">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="mb-1"><i class="fas fa-user-plus text-primary"></i> Tambah Siswa Baru</h3>
+            <p class="text-muted mb-0">Formulir pendaftaran siswa baru ke sistem SPMB Plus</p>
+        </div>
+    </div>
+
+    <!-- Alert Messages -->
+    <?php if (session()->getFlashdata('success')): ?>
+        <div class="alert alert-success alert-dismissible fade show">
+            <i class="fas fa-check-circle me-2"></i>
+            <?= session()->getFlashdata('success') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    <?php endif; ?>
+
+    <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger alert-dismissible fade show">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <?= session()->getFlashdata('error') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    <?php endif; ?>
+
+    <?php if (isset($validation)): ?>
+        <div class="alert alert-danger alert-dismissible fade show">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            <strong>Terdapat kesalahan validasi:</strong>
+            <?= $validation->listErrors() ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    <?php endif; ?>
+
+    <form action="<?= base_url('panitia/tambah-siswa') ?>" method="post">
+        <?= csrf_field() ?>
+
+        <!-- Card 1: Data Pribadi -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-light">
+                <h5 class="mb-0 text-primary"><i class="fas fa-user me-2"></i> Data Pribadi Siswa</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">NISN <span class="text-danger">*</span></label>
+                        <input type="text" name="nisn" class="form-control" value="<?= old('nisn') ?>" maxlength="10" placeholder="10 digit NISN">
+                        <small class="text-muted">Nomor Induk Siswa Nasional</small>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">NIK <span class="text-danger">*</span></label>
+                        <input type="text" name="nik" class="form-control" value="<?= old('nik') ?>" maxlength="16" placeholder="16 digit NIK" required>
+                        <small class="text-muted">Nomor Induk Kependudukan</small>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">No. KK <span class="text-danger">*</span></label>
+                        <input type="text" name="no_kk" class="form-control" value="<?= old('no_kk') ?>" maxlength="16" placeholder="16 digit No. KK" required>
+                        <small class="text-muted">Nomor Kartu Keluarga</small>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label class="form-label fw-semibold">Nama Lengkap <span class="text-danger">*</span></label>
+                        <input type="text" name="nama_lengkap" class="form-control" value="<?= old('nama_lengkap') ?>" placeholder="Nama lengkap sesuai akta kelahiran" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">Jenis Kelamin <span class="text-danger">*</span></label>
+                        <select name="jenis_kelamin" class="form-select" required>
+                            <option value="">-- Pilih --</option>
+                            <option value="laki-laki" <?= old('jenis_kelamin') == 'laki-laki' ? 'selected' : '' ?>>Laki-laki</option>
+                            <option value="perempuan" <?= old('jenis_kelamin') == 'perempuan' ? 'selected' : '' ?>>Perempuan</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">Tempat Lahir <span class="text-danger">*</span></label>
+                        <input type="text" name="tempat_lahir" class="form-control" value="<?= old('tempat_lahir') ?>" placeholder="Kota/Kabupaten" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">Tanggal Lahir <span class="text-danger">*</span></label>
+                        <input type="date" name="tanggal_lahir" class="form-control" value="<?= old('tanggal_lahir') ?>" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">Agama <span class="text-danger">*</span></label>
+                        <select name="agama" class="form-select" required>
+                            <option value="">-- Pilih --</option>
+                            <option value="Islam" <?= old('agama') == 'Islam' ? 'selected' : '' ?>>Islam</option>
+                            <option value="Kristen" <?= old('agama') == 'Kristen' ? 'selected' : '' ?>>Kristen</option>
+                            <option value="Katolik" <?= old('agama') == 'Katolik' ? 'selected' : '' ?>>Katolik</option>
+                            <option value="Hindu" <?= old('agama') == 'Hindu' ? 'selected' : '' ?>>Hindu</option>
+                            <option value="Buddha" <?= old('agama') == 'Buddha' ? 'selected' : '' ?>>Buddha</option>
+                            <option value="Konghucu" <?= old('agama') == 'Konghucu' ? 'selected' : '' ?>>Konghucu</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">Kewarganegaraan <span class="text-danger">*</span></label>
+                        <select name="kewarganegaraan" class="form-select" required>
+                            <option value="WNI" <?= old('kewarganegaraan', 'WNI') == 'WNI' ? 'selected' : '' ?>>WNI (Warga Negara Indonesia)</option>
+                            <option value="WNA" <?= old('kewarganegaraan') == 'WNA' ? 'selected' : '' ?>>WNA (Warga Negara Asing)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">Status Dalam Keluarga <span class="text-danger">*</span></label>
+                        <select name="status_dalam_keluarga" class="form-select" required>
+                            <option value="">-- Pilih --</option>
+                            <option value="Anak Kandung" <?= old('status_dalam_keluarga') == 'Anak Kandung' ? 'selected' : '' ?>>Anak Kandung</option>
+                            <option value="Anak Tiri" <?= old('status_dalam_keluarga') == 'Anak Tiri' ? 'selected' : '' ?>>Anak Tiri</option>
+                            <option value="Anak Angkat" <?= old('status_dalam_keluarga') == 'Anak Angkat' ? 'selected' : '' ?>>Anak Angkat</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">Anak Ke- <span class="text-danger">*</span></label>
+                        <input type="number" name="anak_ke" class="form-control" value="<?= old('anak_ke') ?>" min="1" placeholder="Contoh: 1" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">Jumlah Saudara Kandung</label>
+                        <input type="number" name="jumlah_saudara" class="form-control" value="<?= old('jumlah_saudara', '0') ?>" min="0" placeholder="Contoh: 2">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Bahasa Sehari-hari</label>
+                        <input type="text" name="bahasa" class="form-control" value="<?= old('bahasa', 'Indonesia') ?>" placeholder="Contoh: Indonesia">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Tinggi Badan (cm)</label>
+                        <input type="number" name="tinggi_badan" class="form-control" value="<?= old('tinggi_badan') ?>" placeholder="Contoh: 165">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Berat Badan (kg)</label>
+                        <input type="number" name="berat_badan" class="form-control" value="<?= old('berat_badan') ?>" placeholder="Contoh: 55">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Golongan Darah</label>
+                        <select name="golongan_darah" class="form-select">
+                            <option value="">-- Pilih --</option>
+                            <option value="A" <?= old('golongan_darah') == 'A' ? 'selected' : '' ?>>A</option>
+                            <option value="B" <?= old('golongan_darah') == 'B' ? 'selected' : '' ?>>B</option>
+                            <option value="AB" <?= old('golongan_darah') == 'AB' ? 'selected' : '' ?>>AB</option>
+                            <option value="O" <?= old('golongan_darah') == 'O' ? 'selected' : '' ?>>O</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Penyakit yang Pernah Diderita</label>
+                        <input type="text" name="penyakit" class="form-control" value="<?= old('penyakit') ?>" placeholder="Contoh: Asma, Diabetes, dll">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Kelainan Jasmani</label>
+                        <input type="text" name="kelainan_jasmani" class="form-control" value="<?= old('kelainan_jasmani') ?>" placeholder="Jika ada">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2: Alamat Lengkap -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-light">
+                <h5 class="mb-0 text-primary"><i class="fas fa-map-marker-alt me-2"></i> Alamat Lengkap</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label class="form-label fw-semibold">Alamat Jalan <span class="text-danger">*</span></label>
+                        <input type="text" name="alamat_jalan" class="form-control" value="<?= old('alamat_jalan') ?>" placeholder="Jl. Contoh No. 123, RT/RW" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">Dusun</label>
+                        <input type="text" name="dusun" class="form-control" value="<?= old('dusun') ?>" placeholder="Nama dusun (opsional)">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">Kelurahan/Desa <span class="text-danger">*</span></label>
+                        <input type="text" name="kelurahan" class="form-control" value="<?= old('kelurahan') ?>" placeholder="Nama kelurahan" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">Kecamatan <span class="text-danger">*</span></label>
+                        <input type="text" name="kecamatan" class="form-control" value="<?= old('kecamatan') ?>" placeholder="Nama kecamatan" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">Kabupaten/Kota <span class="text-danger">*</span></label>
+                        <input type="text" name="kabupaten" class="form-control" value="<?= old('kabupaten') ?>" placeholder="Nama kabupaten" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Provinsi <span class="text-danger">*</span></label>
+                        <input type="text" name="provinsi" class="form-control" value="<?= old('provinsi') ?>" placeholder="Nama provinsi" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Kode Pos <span class="text-danger">*</span></label>
+                        <input type="text" name="kode_pos" class="form-control" value="<?= old('kode_pos') ?>" maxlength="5" placeholder="Contoh: 12345" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Nomor HP <span class="text-danger">*</span></label>
+                        <input type="text" name="nomor_hp" class="form-control" value="<?= old('nomor_hp') ?>" placeholder="08xxxxxxxxxx" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3: Data Orang Tua -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-light">
+                <h5 class="mb-0 text-primary"><i class="fas fa-users me-2"></i> Data Orang Tua</h5>
+            </div>
+            <div class="card-body">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Nama Ayah <span class="text-danger">*</span></label>
+                        <input type="text" name="nama_ayah" class="form-control" value="<?= old('nama_ayah') ?>" placeholder="Nama lengkap ayah" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Nama Ibu <span class="text-danger">*</span></label>
+                        <input type="text" name="nama_ibu" class="form-control" value="<?= old('nama_ibu') ?>" placeholder="Nama lengkap ibu" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 4: Data Sekolah & Pendaftaran -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-light">
+                <h5 class="mb-0 text-primary"><i class="fas fa-school me-2"></i> Data Sekolah & Pendaftaran</h5>
+            </div>
+            <div class="card-body">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Asal Sekolah <span class="text-danger">*</span></label>
+                        <input type="text" name="asal_sekolah" class="form-control" value="<?= old('asal_sekolah') ?>" placeholder="Nama sekolah asal" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">NPSN Sekolah</label>
+                        <input type="text" name="npsn_sekolah_asal" class="form-control" value="<?= old('npsn_sekolah_asal') ?>" maxlength="8" placeholder="8 digit NPSN (opsional)">
+                        <small class="text-muted">Opsional - 8 digit kode NPSN</small>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Jurusan yang Dipilih <span class="text-danger">*</span></label>
+                        <select name="jurusan_id" class="form-select" required>
+                            <option value="">-- Pilih Jurusan --</option>
+                            <?php if (isset($majors) && is_array($majors)): ?>
+                                <?php foreach ($majors as $major): ?>
+                                    <option value="<?= $major['id'] ?>" <?= old('jurusan_id') == $major['id'] ? 'selected' : '' ?>>
+                                        <?= esc($major['nama_jurusan']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Hobi</label>
+                        <select name="hobbies[]" class="form-select">
+                            <option value="">-- Pilih Hobi (Opsional) --</option>
+                            <?php if (isset($hobbies) && is_array($hobbies)): ?>
+                                <?php foreach ($hobbies as $hobby): ?>
+                                    <option value="<?= $hobby['id'] ?>" <?= old('hobbies') == $hobby['id'] ? 'selected' : '' ?>>
+                                        <?= esc($hobby['nama_hobi']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </select>
+                        <small class="text-muted">Pilih satu hobi dari daftar</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">
+                        <i class="fas fa-info-circle me-1"></i>
+                        Field bertanda <span class="text-danger">*</span> wajib diisi
+                    </small>
+                    <div class="d-flex gap-2">
+                        <a href="<?= base_url('panitia/daftar-siswa') ?>" class="btn btn-secondary">
+                            <i class="fas fa-times me-1"></i> Batal
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i> Simpan Data Siswa
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+<?= $this->endSection(); ?>

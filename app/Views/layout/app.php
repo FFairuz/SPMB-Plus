@@ -4,6 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistem Penerimaan Mahasiswa Baru - SPMB Plus untuk mengelola pendaftaran siswa secara online">
+    <meta name="theme-color" content="#3b82f6">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="SPMB Plus">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="<?= base_url('manifest.json') ?>">
+    
+    <!-- PWA Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="<?= base_url('pwa-icons/icon-192x192.png') ?>">
+    <link rel="icon" type="image/png" sizes="512x512" href="<?= base_url('pwa-icons/icon-512x512.png') ?>">
+    <link rel="apple-touch-icon" href="<?= base_url('pwa-icons/icon-192x192.png') ?>">
+    
     <title><?= $title ?? app_name() ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
@@ -46,15 +63,16 @@
         /* Navbar Styling */
         .navbar {
             background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            border-bottom: 3px solid #60a5fa;
-            padding: 0.875rem 2rem;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            border-bottom: 2px solid #60a5fa;
+            padding: 0.5rem 1.5rem;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
             position: sticky;
             top: 0;
             z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            min-height: 56px;
         }
 
         .navbar * {
@@ -70,12 +88,12 @@
         }
 
         .navbar-brand {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: #ffffff !important;
             display: flex;
             align-items: center;
-            gap: 0.625rem;
+            gap: 0.5rem;
             text-decoration: none;
             transition: all 0.3s ease;
         }
@@ -86,7 +104,7 @@
         }
 
         .navbar-brand i {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: #ffffff !important;
         }
 
@@ -103,8 +121,8 @@
         }
 
         .user-avatar {
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             background: #ffffff;
             display: flex;
@@ -112,8 +130,8 @@
             justify-content: center;
             color: var(--primary-color);
             font-weight: 700;
-            font-size: 1rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            font-size: 0.875rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
             border: 2px solid #60a5fa;
         }
 
@@ -125,12 +143,12 @@
         .user-name {
             font-weight: 600;
             color: #ffffff !important;
-            font-size: 0.9rem;
+            font-size: 0.813rem;
             line-height: 1.2;
         }
 
         .user-role {
-            font-size: 0.75rem;
+            font-size: 0.688rem;
             color: rgba(255, 255, 255, 0.8) !important;
             color: rgba(255, 255, 255, 0.85);
             text-transform: uppercase;
@@ -143,21 +161,21 @@
         }
 
         .btn-navbar {
-            padding: 0.5rem 1.25rem;
-            border-radius: 8px;
+            padding: 0.375rem 0.875rem;
+            border-radius: 6px;
             font-weight: 600;
-            font-size: 0.875rem;
+            font-size: 0.813rem;
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.375rem;
             text-decoration: none;
         }
 
         .btn-navbar i {
-            font-size: 1rem;
+            font-size: 0.875rem;
         }
 
         .btn-edit-profile {
@@ -208,15 +226,81 @@
             box-shadow: 0 6px 16px rgba(239, 68, 68, 0.5);
         }
 
+        /* Digital Clock */
+        .digital-clock {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            padding: 0.375rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            margin-right: 0.75rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .clock-time {
+            font-size: 1rem;
+            font-weight: 700;
+            color: white !important;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.5px;
+        }
+
+        .clock-date {
+            font-size: 0.688rem;
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            margin-top: 1px;
+        }
+
+        /* PWA Install Button */
+        #pwa-install-btn {
+            display: none;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white !important;
+            border: 1.5px solid #10b981;
+            padding: 0.375rem 0.875rem;
+            border-radius: 6px;
+            margin-right: 0.75rem;
+            font-size: 0.813rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+        }
+
+        #pwa-install-btn i {
+            margin-right: 0.375rem;
+            font-size: 0.875rem;
+            color: white !important;
+        }
+
+        #pwa-install-btn:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+
+        /* PWA Mode Adjustments */
+        .pwa-mode #pwa-install-btn {
+            display: none !important;
+        }
+
         /* Navbar Responsive */
         @media (max-width: 768px) {
             .navbar {
-                padding: 0.75rem 1rem;
+                padding: 0.5rem 1rem;
                 flex-wrap: wrap;
+                min-height: 52px;
             }
 
             .navbar-brand {
-                font-size: 1.1rem;
+                font-size: 0.938rem;
+            }
+
+            .navbar-brand i {
+                font-size: 1.125rem;
             }
 
             .user-details {
@@ -227,9 +311,17 @@
                 gap: 0.5rem;
             }
 
+            .digital-clock {
+                display: none;
+            }
+
+            #pwa-install-btn {
+                display: none !important;
+            }
+
             .btn-navbar {
-                padding: 0.5rem 0.875rem;
-                font-size: 0.8rem;
+                padding: 0.375rem 0.75rem;
+                font-size: 0.75rem;
             }
 
             .btn-navbar span {
@@ -1222,6 +1314,14 @@
             </div>
             
             <div class="navbar-actions">
+                <button id="pwa-install-btn" title="Install aplikasi ke perangkat Anda">
+                    <i class="bi bi-download"></i>
+                    <span>Install App</span>
+                </button>
+                <div class="digital-clock">
+                    <div class="clock-time" id="clockTime">00:00:00</div>
+                    <div class="clock-date" id="clockDate">Loading...</div>
+                </div>
                 <a href="<?= base_url('profile/edit') ?>" class="btn-navbar btn-edit-profile">
                     <i class="bi bi-person-gear"></i>
                     <span>Edit Profile</span>
@@ -1362,6 +1462,117 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- PWA Registration Script -->
+    <script>
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('<?= base_url('sw.js') ?>')
+                    .then(registration => {
+                        console.log('✅ Service Worker registered successfully:', registration.scope);
+                        
+                        // Check for updates periodically
+                        setInterval(() => {
+                            registration.update();
+                        }, 60000); // Check every minute
+                    })
+                    .catch(error => {
+                        console.error('❌ Service Worker registration failed:', error);
+                    });
+            });
+            
+            // Handle service worker updates
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                console.log('🔄 New Service Worker activated');
+                // Optional: show notification to user about update
+            });
+        }
+        
+        // PWA Install Prompt
+        let deferredPrompt;
+        const installButton = document.getElementById('pwa-install-btn');
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('📱 PWA install prompt available');
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show install button
+            if (installButton) {
+                installButton.style.display = 'inline-block';
+            }
+        });
+        
+        // Handle install button click
+        if (installButton) {
+            installButton.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    console.log(`User response to install prompt: ${outcome}`);
+                    deferredPrompt = null;
+                    installButton.style.display = 'none';
+                }
+            });
+        }
+        
+        // Detect if app is installed
+        window.addEventListener('appinstalled', () => {
+            console.log('✅ PWA installed successfully');
+            deferredPrompt = null;
+            if (installButton) {
+                installButton.style.display = 'none';
+            }
+        });
+        
+        // Check if running as PWA
+        function isPWA() {
+            return window.matchMedia('(display-mode: standalone)').matches ||
+                   window.navigator.standalone === true;
+        }
+        
+        if (isPWA()) {
+            console.log('🚀 Running as PWA');
+            document.body.classList.add('pwa-mode');
+        }
+    </script>
+    
+    <!-- Digital Clock Script -->
+    <script>
+        function updateClock() {
+            const now = new Date();
+            
+            // Format time (HH:MM:SS)
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            
+            // Format date (Day, DD Month YYYY)
+            const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
+                          'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+            
+            const dayName = days[now.getDay()];
+            const date = String(now.getDate()).padStart(2, '0');
+            const monthName = months[now.getMonth()];
+            const year = now.getFullYear();
+            const dateString = `${dayName}, ${date} ${monthName} ${year}`;
+            
+            // Update DOM
+            const clockTime = document.getElementById('clockTime');
+            const clockDate = document.getElementById('clockDate');
+            
+            if (clockTime) clockTime.textContent = timeString;
+            if (clockDate) clockDate.textContent = dateString;
+        }
+        
+        // Update clock immediately and then every second
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+    
     <?= $this->renderSection('scripts'); ?>
 </body>
 

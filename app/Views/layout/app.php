@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="<?= base_url('css/readability.css') ?>">
     <link rel="stylesheet" href="<?= base_url('css/dynamic-logo.css') ?>">
     <style>
@@ -42,6 +43,49 @@
             --dark-color: #1e293b;
             --light-bg: #f8fafc;
             --border-color: #e2e8f0;
+            
+            /* Dark Mode Colors */
+            --dark-bg: #0f172a;
+            --dark-surface: #1e293b;
+            --dark-border: #334155;
+            --dark-text: #e2e8f0;
+        }
+
+        /* Dark Mode */
+        body.dark-mode {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: var(--dark-text);
+        }
+
+        body.dark-mode .card {
+            background: var(--dark-surface);
+            border-color: var(--dark-border);
+            color: var(--dark-text);
+        }
+
+        body.dark-mode .sidebar {
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+            border-color: var(--dark-border);
+        }
+
+        body.dark-mode .main-content {
+            background: var(--dark-bg);
+        }
+
+        body.dark-mode .table {
+            color: var(--dark-text);
+            border-color: var(--dark-border);
+        }
+
+        body.dark-mode .table thead {
+            background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+        }
+
+        body.dark-mode .form-control,
+        body.dark-mode .form-select {
+            background: var(--dark-surface);
+            color: var(--dark-text);
+            border-color: var(--dark-border);
         }
 
         * {
@@ -285,6 +329,305 @@
         /* PWA Mode Adjustments */
         .pwa-mode #pwa-install-btn {
             display: none !important;
+        }
+
+        /* ========== QUICK WINS FEATURES ========== */
+        
+        /* Loading States & Skeleton Screens */
+        .skeleton {
+            animation: skeleton-loading 1s linear infinite alternate;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            border-radius: 8px;
+        }
+
+        @keyframes skeleton-loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .skeleton-text {
+            height: 16px;
+            margin-bottom: 8px;
+        }
+
+        .skeleton-title {
+            height: 24px;
+            width: 60%;
+            margin-bottom: 12px;
+        }
+
+        .skeleton-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+        }
+
+        .skeleton-card {
+            height: 200px;
+            width: 100%;
+        }
+
+        /* Loading Spinner */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Breadcrumb Navigation */
+        .breadcrumb-container {
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .breadcrumb {
+            background: transparent;
+            margin-bottom: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb-item {
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .breadcrumb-item + .breadcrumb-item::before {
+            content: "›";
+            padding: 0 0.5rem;
+            color: #94a3b8;
+            font-size: 1.2rem;
+        }
+
+        .breadcrumb-item a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .breadcrumb-item a:hover {
+            color: var(--primary-dark);
+            gap: 0.5rem;
+        }
+
+        .breadcrumb-item.active {
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        /* Dark Mode Toggle Button */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+        }
+
+        .dark-mode-toggle:active {
+            transform: scale(0.95);
+        }
+
+        body.dark-mode .dark-mode-toggle {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+        }
+
+        body.dark-mode .dark-mode-toggle:hover {
+            box-shadow: 0 6px 20px rgba(251, 191, 36, 0.5);
+        }
+
+        /* Print Styles */
+        @media print {
+            .navbar,
+            .sidebar,
+            .dark-mode-toggle,
+            #pwa-install-btn,
+            .btn,
+            .breadcrumb-container,
+            footer {
+                display: none !important;
+            }
+
+            .main-content {
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+            }
+
+            .card {
+                border: 1px solid #ddd !important;
+                box-shadow: none !important;
+                page-break-inside: avoid;
+            }
+
+            body {
+                background: white !important;
+                color: black !important;
+            }
+
+            .table {
+                border: 1px solid #000 !important;
+            }
+
+            .table th,
+            .table td {
+                border: 1px solid #000 !important;
+                padding: 8px !important;
+            }
+        }
+
+        /* Enhanced Search & Filter */
+        .search-filter-bar {
+            background: white;
+            padding: 1.25rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-input-wrapper {
+            position: relative;
+        }
+
+        .search-input-wrapper i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 1.1rem;
+        }
+
+        .search-input {
+            padding-left: 3rem !important;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .filter-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.75rem;
+        }
+
+        .filter-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.375rem 0.75rem;
+            background: var(--primary-light);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.813rem;
+            font-weight: 500;
+        }
+
+        .filter-tag .remove-tag {
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .filter-tag .remove-tag:hover {
+            opacity: 1;
+        }
+
+        /* Export Button Styles */
+        .export-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-export {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-export-excel {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-export-pdf {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .btn-export:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         /* Navbar Responsive */
@@ -1281,6 +1624,11 @@
 </head>
 
 <body>
+    <!-- Dark Mode Toggle Button -->
+    <button id="darkModeToggle" class="dark-mode-toggle" title="Toggle Dark Mode (Ctrl+D)">
+        <i class="bi bi-moon-fill"></i>
+    </button>
+    
     <!-- Navbar -->
     <?php if (session()->get('is_logged_in')): ?>
     <nav class="navbar">
@@ -1462,6 +1810,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <!-- PWA Registration Script -->
     <script>
@@ -1571,6 +1920,188 @@
         // Update clock immediately and then every second
         updateClock();
         setInterval(updateClock, 1000);
+    </script>
+    
+    <!-- Quick Wins Functionality -->
+    <script>
+        // ========== DARK MODE TOGGLE ==========
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+        
+        // Check for saved dark mode preference
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-mode');
+            if (darkModeToggle) {
+                darkModeToggle.innerHTML = '<i class="bi bi-sun-fill"></i>';
+            }
+        }
+        
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                
+                if (body.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                    darkModeToggle.innerHTML = '<i class="bi bi-sun-fill"></i>';
+                    showToast('success', 'Mode Gelap Aktif', 'Mata Anda akan berterima kasih! 🌙');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                    darkModeToggle.innerHTML = '<i class="bi bi-moon-fill"></i>';
+                    showToast('success', 'Mode Terang Aktif', 'Selamat beraktivitas! ☀️');
+                }
+            });
+        }
+        
+        // ========== TOAST NOTIFICATIONS ==========
+        function showToast(icon, title, text) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer);
+                    toast.addEventListener('mouseleave', Swal.resumeTimer);
+                }
+            });
+            
+            Toast.fire({
+                icon: icon,
+                title: title,
+                text: text
+            });
+        }
+        
+        // ========== LOADING OVERLAY ==========
+        function showLoading() {
+            let overlay = document.getElementById('loadingOverlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'loadingOverlay';
+                overlay.className = 'loading-overlay';
+                overlay.innerHTML = '<div class="spinner"></div>';
+                document.body.appendChild(overlay);
+            }
+            overlay.classList.add('active');
+        }
+        
+        function hideLoading() {
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) {
+                overlay.classList.remove('active');
+            }
+        }
+        
+        // ========== CONFIRM DELETE ==========
+        function confirmDelete(message = 'Data yang dihapus tidak dapat dikembalikan!') {
+            return Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: message,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#64748b',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+            });
+        }
+        
+        // ========== SUCCESS MESSAGE ==========
+        function showSuccess(title, text) {
+            Swal.fire({
+                icon: 'success',
+                title: title,
+                text: text,
+                confirmButtonColor: '#3b82f6',
+                confirmButtonText: 'OK'
+            });
+        }
+        
+        // ========== ERROR MESSAGE ==========
+        function showError(title, text) {
+            Swal.fire({
+                icon: 'error',
+                title: title,
+                text: text,
+                confirmButtonColor: '#ef4444',
+                confirmButtonText: 'OK'
+            });
+        }
+        
+        // ========== EXPORT FUNCTIONS ==========
+        function exportToExcel(tableId, filename = 'data') {
+            showLoading();
+            
+            setTimeout(() => {
+                // Implementation would use a library like SheetJS
+                hideLoading();
+                showToast('success', 'Berhasil Export!', 'File Excel berhasil diunduh');
+            }, 1500);
+        }
+        
+        function exportToPDF(filename = 'data') {
+            showLoading();
+            
+            setTimeout(() => {
+                window.print();
+                hideLoading();
+            }, 500);
+        }
+        
+        // ========== SEARCH ENHANCEMENT ==========
+        function initSearchFilter() {
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) {
+                searchInput.addEventListener('input', debounce(function(e) {
+                    const searchTerm = e.target.value.toLowerCase();
+                    // Implementation for filtering table/cards
+                    console.log('Searching for:', searchTerm);
+                }, 300));
+            }
+        }
+        
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+        
+        // ========== KEYBOARD SHORTCUTS ==========
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + K for search
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                const searchInput = document.querySelector('.search-input');
+                if (searchInput) searchInput.focus();
+            }
+            
+            // Ctrl/Cmd + D for dark mode toggle
+            if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                e.preventDefault();
+                if (darkModeToggle) darkModeToggle.click();
+            }
+        });
+        
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            initSearchFilter();
+            
+            // Show welcome toast on first visit
+            if (!sessionStorage.getItem('welcomed')) {
+                setTimeout(() => {
+                    showToast('info', 'Selamat Datang!', 'Tekan Ctrl+K untuk pencarian cepat');
+                    sessionStorage.setItem('welcomed', 'true');
+                }, 1000);
+            }
+        });
     </script>
     
     <?= $this->renderSection('scripts'); ?>

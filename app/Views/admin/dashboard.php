@@ -6,6 +6,16 @@
 
 <link rel="stylesheet" href="<?= base_url('css/dashboard.css') ?>">
 
+<!-- Breadcrumb -->
+<div class="breadcrumb-container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="<?= base_url('/') ?>"><i class="bi bi-house-door"></i> Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+        </ol>
+    </nav>
+</div>
+
 <!-- Dashboard Header Section -->
 <div class="dashboard-header">
     <h1><i class="bi bi-graph-up me-2"></i>Dashboard Admin</h1>
@@ -235,18 +245,25 @@
 <div class="row g-4 mb-5">
     <div class="col-12">
         <div class="chart-card">
-            <div class="chart-header d-flex justify-content-between align-items-center">
-                <div>
-                    <h5><i class="bi bi-table"></i> Detail Kuota Jurusan</h5>
-                    <small><?= count($quotaStats); ?> Jurusan</small>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h5><i class="bi bi-table"></i> Detail Kuota Jurusan</h5>
+                        <small><?= count($quotaStats); ?> Jurusan</small>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button onclick="exportToExcel('quotaTable', 'kuota-jurusan')" class="btn btn-export btn-export-excel">
+                            <i class="bi bi-file-earmark-excel"></i> Export Excel
+                        </button>
+                        <button onclick="exportToPDF('kuota-jurusan')" class="btn btn-export btn-export-pdf">
+                            <i class="bi bi-file-earmark-pdf"></i> Export PDF
+                        </button>
+                        <a href="/admin/quotas/statistics" class="btn btn-sm btn-info text-white">
+                            <i class="bi bi-graph-up"></i> Statistik Lengkap
+                        </a>
+                    </div>
                 </div>
-                <a href="/admin/quotas/statistics" class="btn btn-sm btn-info text-white">
-                    <i class="bi bi-graph-up"></i> Lihat Statistik Lengkap
-                </a>
-            </div>
-            <div class="chart-body">
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle">
+                    <table id="quotaTable" class="table table-hover align-middle"
                         <thead class="table-light">
                             <tr>
                                 <th>Jurusan</th>

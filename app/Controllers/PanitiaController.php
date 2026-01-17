@@ -98,6 +98,7 @@ class PanitiaController extends BaseController
 
         if ($this->request->getMethod() === 'post') {
             $rules = [
+                'jalur_pendaftaran' => 'required|in_list[PPDB Bersama,Muhammadiyah,Non Muhammadiyah]',
                 'nik' => 'required|numeric|min_length[16]|max_length[16]|is_unique[applicants_dapodik.nik]',
                 'nama_lengkap' => 'required|min_length[3]|max_length[255]',
                 'jenis_kelamin' => 'required|in_list[laki-laki,perempuan]',
@@ -132,12 +133,16 @@ class PanitiaController extends BaseController
                 $hobbyModel = new \App\Models\Hobby();
                 $hobbies = $hobbyModel->getActiveHobbies();
                 
+                // Generate nomor pendaftaran preview
+                $nomorPendaftaranPreview = $this->applicantModel->generateNomorPendaftaran();
+                
                 return view('panitia/tambah_siswa', [
                     'title' => 'Tambah Siswa Baru',
                     'validation' => $this->validator,
                     'schools' => $schools,
                     'majors' => $majors,
                     'hobbies' => $hobbies,
+                    'nomor_pendaftaran_preview' => $nomorPendaftaranPreview,
                 ]);
             }
 
@@ -145,6 +150,7 @@ class PanitiaController extends BaseController
             $nomor_pendaftaran = $this->applicantModel->generateNomorPendaftaran();
 
             $data = [
+                'jalur_pendaftaran' => $this->request->getPost('jalur_pendaftaran'),
                 'nik' => $this->request->getPost('nik'),
                 'nama_lengkap' => $this->request->getPost('nama_lengkap'),
                 'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
@@ -167,8 +173,9 @@ class PanitiaController extends BaseController
                 'nama_ayah' => $this->request->getPost('nama_ayah'),
                 'nama_ibu' => $this->request->getPost('nama_ibu'),
                 'nomor_pendaftaran' => $nomor_pendaftaran,
-                'status' => 'submitted',
+                'status' => 'verified', // Panitia yang menambahkan, otomatis terverifikasi
                 'tanggal_submit' => date('Y-m-d H:i:s'),
+                'catatan_verifikasi' => 'Didaftarkan langsung oleh panitia pada ' . date('Y-m-d H:i:s'),
             ];
 
             try {
@@ -183,7 +190,7 @@ class PanitiaController extends BaseController
                         $applicantHobbyModel->syncHobbies($applicant_id, $hobbies);
                     }
                     
-                    session()->setFlashdata('success', 'Calon siswa berhasil didaftarkan dengan nomor pendaftaran: ' . $nomor_pendaftaran);
+                    session()->setFlashdata('success', 'Calon siswa berhasil didaftarkan dengan nomor pendaftaran: ' . $nomor_pendaftaran . '. Status: TERVERIFIKASI (didaftarkan oleh panitia)');
                     
                     // Redirect berdasarkan role
                     $role = session()->get('role');
@@ -211,12 +218,16 @@ class PanitiaController extends BaseController
         $hobbyModel = new \App\Models\Hobby();
         $hobbies = $hobbyModel->getActiveHobbies();
         
+        // Generate nomor pendaftaran preview
+        $nomorPendaftaranPreview = $this->applicantModel->generateNomorPendaftaran();
+        
         return view('panitia/tambah_siswa', [
             'title' => 'Tambah Siswa Baru',
             'validation' => null,
             'schools' => $schools,
             'majors' => $majors,
             'hobbies' => $hobbies,
+            'nomor_pendaftaran_preview' => $nomorPendaftaranPreview,
         ]);
     }
 
@@ -373,8 +384,10 @@ class PanitiaController extends BaseController
             }
 
             try {
+                $panitiaName = session()->get('username') ?? 'Panitia';
                 $this->applicantModel->update($applicant_id, [
                     'status' => 'verified',
+                    'catatan_verifikasi' => 'Diverifikasi oleh ' . $panitiaName . ' pada ' . date('Y-m-d H:i:s'),
                     'updated_at' => date('Y-m-d H:i:s'),
                 ]);
                 session()->setFlashdata('success', 'Pendaftar ' . $applicant['nama_lengkap'] . ' berhasil diverifikasi.');
@@ -385,11 +398,15 @@ class PanitiaController extends BaseController
             return redirect()->to('/panitia/verifikasi-pendaftar');
         }
 
-        // Jika tidak ada applicant_id, tampilkan list semua pendaftar
-        $applicants = $this->applicantModel->findAll();
+        // Jika tidak ada applicant_id, tampilkan list pendaftar yang perlu verifikasi (status: submitted)
+        $applicants = $this->applicantModel
+            ->where('status', 'submitted')
+            ->orderBy('created_at', 'DESC')
+            ->findAll();
 
         return view('panitia/verifikasi_pendaftar', [
             'applicants' => $applicants,
+            'title' => 'Verifikasi Pendaftar',
         ]);
     }
 
@@ -410,6 +427,7 @@ class PanitiaController extends BaseController
         try {
             $this->applicantModel->update($applicant_id, [
                 'status' => 'submitted',
+                'catatan_verifikasi' => null, // Hapus catatan verifikasi
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
             session()->setFlashdata('success', 'Verifikasi untuk ' . $applicant['nama_lengkap'] . ' berhasil dibatalkan.');

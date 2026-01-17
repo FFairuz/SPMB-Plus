@@ -68,6 +68,29 @@ class AdminController extends BaseController
             ->groupBy('jenis_kelamin')
             ->findAll();
         
+        // Quota statistics for active academic year
+        $academicYearModel = new \App\Models\AcademicYear();
+        $quotaModel = new \App\Models\MajorQuota();
+        
+        $activeYear = $academicYearModel->getActiveYear();
+        $quotaStats = [];
+        $quotaChartData = [];
+        
+        if ($activeYear) {
+            $quotaStats = $quotaModel->getQuotaStats($activeYear['tahun_ajaran']);
+            
+            // Prepare chart data
+            foreach ($quotaStats as $quota) {
+                $quotaChartData[] = [
+                    'nama_jurusan' => $quota['nama_jurusan'],
+                    'kuota_total' => $quota['kuota_total'],
+                    'kuota_terisi' => $quota['kuota_terisi'],
+                    'sisa_kuota' => $quota['sisa_kuota'],
+                    'persentase' => $quota['persentase_terisi'] ?? 0,
+                ];
+            }
+        }
+        
         $data = [
             'title' => 'Dashboard Admin PPDB',
             'stats' => $stats,
@@ -76,6 +99,9 @@ class AdminController extends BaseController
             'monthlyData' => $monthlyData,
             'statusData' => $statusData,
             'genderData' => $genderData,
+            'activeYear' => $activeYear,
+            'quotaStats' => $quotaStats,
+            'quotaChartData' => $quotaChartData,
         ];
 
         return view('admin/dashboard', $data);

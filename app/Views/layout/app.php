@@ -57,10 +57,22 @@
             align-items: center;
         }
 
+        .navbar * {
+            color: white !important;
+        }
+
+        .navbar i,
+        .navbar .bi,
+        .navbar .fas,
+        .navbar .far,
+        .navbar .fab {
+            color: white !important;
+        }
+
         .navbar-brand {
             font-size: 1.25rem;
             font-weight: 700;
-            color: #ffffff;
+            color: #ffffff !important;
             display: flex;
             align-items: center;
             gap: 0.625rem;
@@ -69,12 +81,13 @@
         }
 
         .navbar-brand:hover {
-            color: #ffffff;
+            color: #ffffff !important;
             transform: translateY(-2px);
         }
 
         .navbar-brand i {
             font-size: 1.5rem;
+            color: #ffffff !important;
         }
 
         .navbar-user {
@@ -111,13 +124,14 @@
 
         .user-name {
             font-weight: 600;
-            color: #ffffff;
+            color: #ffffff !important;
             font-size: 0.9rem;
             line-height: 1.2;
         }
 
         .user-role {
             font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.8) !important;
             color: rgba(255, 255, 255, 0.85);
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -147,31 +161,51 @@
         }
 
         .btn-edit-profile {
-            background: #ffffff;
-            color: var(--primary-color);
-            border: 2px solid #ffffff;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white !important;
+            border: 2px solid #10b981;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-edit-profile * {
+            color: white !important;
+        }
+
+        .btn-edit-profile i,
+        .btn-edit-profile .bi {
+            color: white !important;
         }
 
         .btn-edit-profile:hover {
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--primary-dark);
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white !important;
+            border-color: #059669;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.4);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.5);
         }
 
         .btn-logout {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            box-shadow: none;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white !important;
+            border: 2px solid #ef4444;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-logout * {
+            color: white !important;
+        }
+
+        .btn-logout i,
+        .btn-logout .bi {
+            color: white !important;
         }
 
         .btn-logout:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.5);
-            color: white;
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            border-color: #dc2626;
+            color: white !important;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.5);
         }
 
         /* Navbar Responsive */
@@ -318,10 +352,19 @@
 
         .card-header {
             background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            color: white;
+            color: white !important;
             border-bottom: none;
             padding: 1.25rem 1.5rem;
             font-weight: 600;
+        }
+
+        .card-header * {
+            color: white !important;
+        }
+
+        .card-header i,
+        .card-header .bi {
+            color: white !important;
         }
 
         /* Buttons */
@@ -353,12 +396,22 @@
 
         .btn-primary {
             background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            color: white;
+            color: white !important;
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary * {
+            color: white !important;
+        }
+
+        .btn-primary i,
+        .btn-primary .bi {
+            color: white !important;
         }
 
         .btn-primary:hover {
             background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white !important;
             transform: translateY(-2px);
             box-shadow: 0 8px 24px rgba(59, 130, 246, 0.5);
         }
@@ -444,7 +497,11 @@
 
         .badge-primary {
             background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            color: white;
+            color: white !important;
+        }
+
+        .badge-primary * {
+            color: white !important;
         }
 
         .badge-warning {
@@ -476,15 +533,24 @@
 
         .table thead {
             background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            color: white;
+            color: white !important;
             border-bottom: none;
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+
+        .table thead * {
+            color: white !important;
+        }
+
+        .table thead i,
+        .table thead .bi {
+            color: white !important;
         }
 
         .table th {
             font-weight: 600;
             font-size: 0.85rem;
-            color: white;
+            color: white !important;
             text-transform: uppercase;
             letter-spacing: 0.8px;
             padding: 1.125rem 1rem;
@@ -760,11 +826,20 @@
         /* Footer Styling */
         footer {
             background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            color: white;
+            color: white !important;
             padding: 1.25rem 1.5rem;
             margin-top: auto;
             width: 100%;
             border-top: 3px solid #60a5fa;
+        }
+
+        footer * {
+            color: white !important;
+        }
+
+        footer i,
+        footer .bi {
+            color: white !important;
         }
 
         .footer-content {
@@ -844,7 +919,16 @@
 
         .icon-circle.primary {
             background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            color: white;
+            color: white !important;
+        }
+
+        .icon-circle.primary * {
+            color: white !important;
+        }
+
+        .icon-circle.primary i,
+        .icon-circle.primary .bi {
+            color: white !important;
         }
 
         .icon-circle.success {
@@ -855,6 +939,37 @@
         .icon-circle.danger {
             background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             color: white;
+        }
+
+        /* Background Primary */
+        .bg-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+            color: white !important;
+        }
+
+        .bg-primary * {
+            color: white !important;
+        }
+
+        .bg-primary i,
+        .bg-primary .bi,
+        .bg-primary .fas,
+        .bg-primary .far,
+        .bg-primary .fab {
+            color: white !important;
+        }
+
+        .bg-primary h1,
+        .bg-primary h2,
+        .bg-primary h3,
+        .bg-primary h4,
+        .bg-primary h5,
+        .bg-primary h6,
+        .bg-primary p,
+        .bg-primary span,
+        .bg-primary a,
+        .bg-primary div {
+            color: white !important;
         }
 
         .icon-circle.warning {
@@ -1151,6 +1266,22 @@
                     <a href="<?= base_url('admin/schools') ?>" class="nav-link <?= (strpos(current_url(), 'admin/schools') !== false) ? 'active' : '' ?>">
                         <i class="bi bi-building"></i>
                         <span>Asal Sekolah</span>
+                    </a>
+                    <a href="<?= base_url('admin/majors') ?>" class="nav-link <?= (strpos(current_url(), 'admin/majors') !== false) ? 'active' : '' ?>">
+                        <i class="bi bi-mortarboard"></i>
+                        <span>Kelola Jurusan</span>
+                    </a>
+                    <a href="<?= base_url('admin/quotas') ?>" class="nav-link <?= (strpos(current_url(), 'admin/quotas') !== false) ? 'active' : '' ?>">
+                        <i class="bi bi-pie-chart"></i>
+                        <span>Kuota Jurusan</span>
+                    </a>
+                    <a href="<?= base_url('admin/hobbies') ?>" class="nav-link <?= (strpos(current_url(), 'admin/hobbies') !== false) ? 'active' : '' ?>">
+                        <i class="bi bi-star"></i>
+                        <span>Kelola Hobi</span>
+                    </a>
+                    <a href="<?= base_url('admin/academic-years') ?>" class="nav-link <?= (strpos(current_url(), 'admin/academic-years') !== false) ? 'active' : '' ?>">
+                        <i class="bi bi-calendar-range"></i>
+                        <span>Tahun Ajaran</span>
                     </a>
                     <a href="<?= base_url('admin/content-management') ?>" class="nav-link <?= (strpos(current_url(), 'admin/content-management') !== false) ? 'active' : '' ?>">
                         <i class="bi bi-layout-text-sidebar-reverse"></i>

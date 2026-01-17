@@ -102,6 +102,7 @@ class AuthService
             'role' => $normalizedRole,
             'is_admin' => $normalizedRole === 'admin',
             'is_logged_in' => true,
+            'isLoggedIn' => true,  // Add camelCase version for compatibility
         ]);
     }
 

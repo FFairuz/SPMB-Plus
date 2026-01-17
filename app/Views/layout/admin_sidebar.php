@@ -41,6 +41,10 @@
             <i class="fas fa-graduation-cap"></i>
             <span>Kelola Jurusan</span>
         </a>
+        <a href="<?= base_url('admin/quotas') ?>" class="nav-link <?= (strpos(current_url(), 'admin/quotas') !== false) ? 'active' : '' ?>">
+            <i class="fas fa-chart-pie"></i>
+            <span>Kuota Jurusan</span>
+        </a>
         <a href="<?= base_url('admin/hobbies') ?>" class="nav-link <?= (strpos(current_url(), 'admin/hobbies') !== false) ? 'active' : '' ?>">
             <i class="fas fa-star"></i>
             <span>Kelola Hobi</span>

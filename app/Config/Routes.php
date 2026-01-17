@@ -81,6 +81,8 @@ $routes->get('test-cetak-pendaftaran/(:num)', function($id) {
 // Debug routes
 $routes->get('debug/users', 'Debug::users');
 $routes->get('debug/roles', 'Debug::roles');
+$routes->get('debug/session', 'CheckSession::index');
+$routes->get('fix-session', 'FixSession::index');
 
 // Auth Routes
 $routes->get('auth/login', 'Auth::login');
@@ -171,6 +173,25 @@ $routes->post('admin/hobbies/create', 'AdminHobbyController::create');
 $routes->get('admin/hobbies/edit/(:num)', 'AdminHobbyController::edit/$1');
 $routes->post('admin/hobbies/edit/(:num)', 'AdminHobbyController::edit/$1');
 $routes->get('admin/hobbies/delete/(:num)', 'AdminHobbyController::delete/$1');
+
+// Admin Major Quota Management Routes
+$routes->get('admin/quotas', 'AdminMajorQuotaController::index');
+$routes->get('admin/quotas/create', 'AdminMajorQuotaController::create');
+$routes->post('admin/quotas/create', 'AdminMajorQuotaController::create');
+$routes->get('admin/quotas/edit/(:num)', 'AdminMajorQuotaController::edit/$1');
+$routes->post('admin/quotas/edit/(:num)', 'AdminMajorQuotaController::edit/$1');
+$routes->post('admin/quotas/delete/(:num)', 'AdminMajorQuotaController::delete/$1');
+$routes->post('admin/quotas/reset/(:num)', 'AdminMajorQuotaController::resetQuotaTerisi/$1');
+$routes->get('admin/quotas/statistics', 'AdminMajorQuotaController::statistics');
+
+// Admin Academic Year Management Routes
+$routes->get('admin/academic-years', 'AdminAcademicYearController::index');
+$routes->get('admin/academic-years/create', 'AdminAcademicYearController::create');
+$routes->post('admin/academic-years/create', 'AdminAcademicYearController::create');
+$routes->get('admin/academic-years/edit/(:num)', 'AdminAcademicYearController::edit/$1');
+$routes->post('admin/academic-years/edit/(:num)', 'AdminAcademicYearController::edit/$1');
+$routes->post('admin/academic-years/delete/(:num)', 'AdminAcademicYearController::delete/$1');
+$routes->post('admin/academic-years/set-active/(:num)', 'AdminAcademicYearController::setActive/$1');
 
 // Kop Surat Routes
 $routes->get('admin/kelola-kop-surat', 'AdminController::kelola_kop_surat');

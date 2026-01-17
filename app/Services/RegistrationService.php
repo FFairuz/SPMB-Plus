@@ -166,7 +166,7 @@ class RegistrationService
 
             return [
                 'success' => true,
-                'message' => 'Registrasi berhasil disubmit. Tunggu verifikasi admin.',
+                'message' => 'Registrasi berhasil disubmit. Tunggu verifikasi dari panitia.',
                 'data' => $updatedApplicant,
             ];
 

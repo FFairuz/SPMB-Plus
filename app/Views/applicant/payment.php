@@ -47,7 +47,7 @@
                 </h5>
                 <div class="mb-3">
                     <small class="text-muted d-block mb-1">Email Pendaftar</small>
-                    <p class="mb-0 fw-semibold"><?= $user['email']; ?></p>
+                    <p class="mb-0 fw-semibold"><?= esc($user['email'] ?? '-'); ?></p>
                 </div>
                 <div class="mb-0">
                     <small class="text-muted d-block mb-1">Biaya Pendaftaran</small>
@@ -68,12 +68,12 @@
                             <i class="bi bi-exclamation-triangle fs-1 text-warning d-block mb-3"></i>
                             <span class="badge bg-warning text-dark px-4 py-2 fs-6">Belum Membayar</span>
                         </div>
-                    <?php elseif ($payment['payment_status'] === 'submitted'): ?>
+                    <?php elseif (isset($payment['payment_status']) && $payment['payment_status'] === 'submitted'): ?>
                         <div class="bg-info bg-opacity-10 rounded p-4">
                             <i class="bi bi-clock-history fs-1 text-info d-block mb-3"></i>
                             <span class="badge bg-info px-4 py-2 fs-6">Menunggu Konfirmasi</span>
                         </div>
-                    <?php elseif ($payment['payment_status'] === 'confirmed'): ?>
+                    <?php elseif (isset($payment['payment_status']) && $payment['payment_status'] === 'confirmed'): ?>
                         <div class="bg-success bg-opacity-10 rounded p-4">
                             <i class="bi bi-check-circle fs-1 text-success d-block mb-3"></i>
                             <span class="badge bg-success px-4 py-2 fs-6">Sudah Dikonfirmasi</span>
@@ -91,7 +91,7 @@
 </div>
 
 <!-- Payment Form -->
-<?php if (!$payment || $payment['payment_status'] === 'rejected' || $payment['payment_status'] === 'submitted'): ?>
+<?php if (!$payment || (isset($payment['payment_status']) && in_array($payment['payment_status'], ['rejected', 'submitted']))): ?>
     <div class="card border-0 shadow-sm">
         <div class="card-header bg-white border-bottom py-3">
             <h5 class="mb-0 fw-semibold">
@@ -107,18 +107,18 @@
                         <label class="form-label fw-semibold">Nama Bank <span class="text-danger">*</span></label>
                         <select name="bank_name" class="form-select form-select-lg" required>
                             <option value="">-- Pilih Bank --</option>
-                            <option value="BCA" <?= ($payment && $payment['bank_name'] === 'BCA') ? 'selected' : ''; ?>>BCA</option>
-                            <option value="Mandiri" <?= ($payment && $payment['bank_name'] === 'Mandiri') ? 'selected' : ''; ?>>Mandiri</option>
-                            <option value="BNI" <?= ($payment && $payment['bank_name'] === 'BNI') ? 'selected' : ''; ?>>BNI</option>
-                            <option value="BTN" <?= ($payment && $payment['bank_name'] === 'BTN') ? 'selected' : ''; ?>>BTN</option>
-                            <option value="Lainnya" <?= ($payment && $payment['bank_name'] === 'Lainnya') ? 'selected' : ''; ?>>Lainnya</option>
+                            <option value="BCA" <?= ($payment && isset($payment['bank_name']) && $payment['bank_name'] === 'BCA') ? 'selected' : ''; ?>>BCA</option>
+                            <option value="Mandiri" <?= ($payment && isset($payment['bank_name']) && $payment['bank_name'] === 'Mandiri') ? 'selected' : ''; ?>>Mandiri</option>
+                            <option value="BNI" <?= ($payment && isset($payment['bank_name']) && $payment['bank_name'] === 'BNI') ? 'selected' : ''; ?>>BNI</option>
+                            <option value="BTN" <?= ($payment && isset($payment['bank_name']) && $payment['bank_name'] === 'BTN') ? 'selected' : ''; ?>>BTN</option>
+                            <option value="Lainnya" <?= ($payment && isset($payment['bank_name']) && $payment['bank_name'] === 'Lainnya') ? 'selected' : ''; ?>>Lainnya</option>
                         </select>
                         <small class="text-muted"><i class="bi bi-info-circle me-1"></i>Bank yang Anda gunakan untuk transfer</small>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">Nomor Rekening <span class="text-danger">*</span></label>
                         <input type="text" name="account_number" class="form-control form-control-lg" 
-                            value="<?= $payment['account_number'] ?? old('account_number'); ?>" required>
+                            value="<?= esc($payment['account_number'] ?? old('account_number') ?? ''); ?>" required>
                         <small class="text-muted"><i class="bi bi-info-circle me-1"></i>Nomor rekening sumber transfer</small>
                     </div>
                 </div>
@@ -127,13 +127,13 @@
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">Atas Nama <span class="text-danger">*</span></label>
                         <input type="text" name="account_holder" class="form-control form-control-lg" 
-                            value="<?= $payment['account_holder'] ?? old('account_holder'); ?>" required>
+                            value="<?= esc($payment['account_holder'] ?? old('account_holder') ?? ''); ?>" required>
                         <small class="text-muted"><i class="bi bi-info-circle me-1"></i>Nama pemilik rekening</small>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Jumlah Transfer <span class="text-danger">*</span></label>
                                     <input type="number" name="transfer_amount" class="form-control" 
-                                        value="<?= $payment['transfer_amount'] ?? $registration_fee; ?>" required>
+                                        value="<?= esc($payment['transfer_amount'] ?? $registration_fee ?? 150000); ?>" required>
                                     <small class="text-muted">Minimal Rp <?= number_format($registration_fee, 0, ',', '.'); ?></small>
                                 </div>
                             </div>
@@ -141,7 +141,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Tanggal Transfer <span class="text-danger">*</span></label>
                                 <input type="date" name="transfer_date" class="form-control" 
-                                    value="<?= $payment['transfer_date'] ?? old('transfer_date'); ?>" required>
+                                    value="<?= esc($payment['transfer_date'] ?? old('transfer_date') ?? ''); ?>" required>
                             </div>
 
                             <div class="mb-4">
@@ -169,7 +169,7 @@
                         </form>
                     </div>
                 </div>
-            <?php elseif ($payment['payment_status'] === 'confirmed'): ?>
+            <?php elseif (isset($payment['payment_status']) && $payment['payment_status'] === 'confirmed'): ?>
                 <div class="card border-0 shadow-sm">
                     <div class="card-body p-5 text-center">
                         <div style="width: 80px; height: 80px; margin: 0 auto 20px; background: #d4edda; border-radius: 50%; display: flex; align-items: center; justify-content: center;">

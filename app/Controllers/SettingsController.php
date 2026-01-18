@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\SettingModel;
+use App\Helpers\PWAIconGenerator;
 use CodeIgniter\HTTP\RedirectResponse;
 
 class SettingsController extends BaseController
@@ -104,6 +105,12 @@ class SettingsController extends BaseController
 
                 $logo->move($uploadPath, $logoName);
                 $this->settingModel->setSetting('app_logo', $logoName, 'image');
+
+                // Generate PWA icons from uploaded logo
+                $logoPath = $uploadPath . $logoName;
+                PWAIconGenerator::generateIcons($logoPath);
+                
+                log_message('info', 'PWA icons generated for new logo: ' . $logoName);
             }
 
             return redirect()->to('/admin/settings')->with('success', 'Pengaturan berhasil diperbarui');

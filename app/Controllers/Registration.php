@@ -235,4 +235,49 @@ class Registration extends BaseController
 
         return view('registration/print', $data);
     }
+
+    /**
+     * Multi-Step Form Wizard
+     * Modern registration form with 6-step wizard interface
+     * 
+     * @return mixed
+     */
+    public function wizard()
+    {
+        $this->requireLogin();
+
+        $userId = $this->getUserId();
+        $applicant = $this->registrationService->getRegistrationForm($userId);
+
+        // Redirect to dashboard if already submitted
+        if ($applicant && $applicant['status'] !== 'draft') {
+            return redirect()->to('/applicant/dashboard');
+        }
+
+        // Get reference data for dropdowns
+        $schoolModel = new School();
+        $schools = $schoolModel->findAll();
+
+        // Get majors (jurusan) from database
+        $majorModel = model('App\Models\Major');
+        $majors = $majorModel->findAll();
+
+        // Get hobbies from database
+        $hobbyModel = model('App\Models\Hobby');
+        $hobbies = $hobbyModel->findAll();
+
+        $data = [
+            'title' => 'Form Pendaftaran - Multi-Step Wizard',
+            'applicant' => $applicant ?? [],
+            'schools' => $schools,
+            'majors' => $majors,
+            'hobbies' => $hobbies,
+            'user' => [
+                'name' => session()->get('name'),
+                'email' => session()->get('email'),
+            ],
+        ];
+
+        return view('registration/form_wizard', $data);
+    }
 }

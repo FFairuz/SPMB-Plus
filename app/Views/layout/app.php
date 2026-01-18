@@ -27,6 +27,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    
+    <!-- Design System v2.0 -->
+    <link rel="stylesheet" href="<?= base_url('css/design-system.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/mobile-nav.css') ?>">
+    
     <link rel="stylesheet" href="<?= base_url('css/readability.css') ?>">
     <link rel="stylesheet" href="<?= base_url('css/dynamic-logo.css') ?>">
     <style>
@@ -2103,6 +2108,161 @@
             }
         });
     </script>
+    
+    <!-- ========== MOBILE BOTTOM NAVIGATION ========== -->
+    <?php if (session()->has('user_id')): ?>
+    <nav class="mobile-bottom-nav">
+        <div class="mobile-nav-container">
+            <a href="<?= base_url('/') ?>" class="mobile-nav-item <?= uri_string() == '' ? 'active' : '' ?>">
+                <i class="bi bi-house-door mobile-nav-icon"></i>
+                <span class="mobile-nav-label">Home</span>
+            </a>
+            
+            <?php if (session()->get('role') === 'applicant'): ?>
+            <a href="<?= base_url('/applicant/dashboard') ?>" class="mobile-nav-item <?= strpos(uri_string(), 'applicant/dashboard') !== false ? 'active' : '' ?>">
+                <i class="bi bi-speedometer2 mobile-nav-icon"></i>
+                <span class="mobile-nav-label">Dashboard</span>
+                <?php if (isset($pending_count) && $pending_count > 0): ?>
+                <span class="mobile-nav-badge"><?= $pending_count ?></span>
+                <?php endif; ?>
+            </a>
+            
+            <!-- Center FAB -->
+            <button class="mobile-nav-fab" id="mobileFabBtn" onclick="toggleFabMenu()">
+                <i class="bi bi-plus-lg"></i>
+            </button>
+            
+            <a href="<?= base_url('/applicant/payment') ?>" class="mobile-nav-item <?= strpos(uri_string(), 'applicant/payment') !== false ? 'active' : '' ?>">
+                <i class="bi bi-credit-card mobile-nav-icon"></i>
+                <span class="mobile-nav-label">Bayar</span>
+            </a>
+            
+            <a href="<?= base_url('/profile') ?>" class="mobile-nav-item <?= strpos(uri_string(), 'profile') !== false ? 'active' : '' ?>">
+                <i class="bi bi-person mobile-nav-icon"></i>
+                <span class="mobile-nav-label">Profil</span>
+            </a>
+            <?php elseif (session()->get('role') === 'admin'): ?>
+            <a href="<?= base_url('/admin/dashboard') ?>" class="mobile-nav-item <?= strpos(uri_string(), 'admin/dashboard') !== false ? 'active' : '' ?>">
+                <i class="bi bi-speedometer2 mobile-nav-icon"></i>
+                <span class="mobile-nav-label">Dashboard</span>
+            </a>
+            
+            <!-- Center FAB -->
+            <button class="mobile-nav-fab" id="mobileFabBtn" onclick="toggleFabMenu()">
+                <i class="bi bi-grid"></i>
+            </button>
+            
+            <a href="<?= base_url('/admin/applicants') ?>" class="mobile-nav-item <?= strpos(uri_string(), 'admin/applicants') !== false ? 'active' : '' ?>">
+                <i class="bi bi-people mobile-nav-icon"></i>
+                <span class="mobile-nav-label">Pendaftar</span>
+            </a>
+            
+            <a href="<?= base_url('/admin/payments') ?>" class="mobile-nav-item <?= strpos(uri_string(), 'admin/payments') !== false ? 'active' : '' ?>">
+                <i class="bi bi-cash-stack mobile-nav-icon"></i>
+                <span class="mobile-nav-label">Pembayaran</span>
+            </a>
+            <?php elseif (session()->get('role') === 'panitia'): ?>
+            <a href="<?= base_url('/panitia/dashboard') ?>" class="mobile-nav-item <?= strpos(uri_string(), 'panitia/dashboard') !== false ? 'active' : '' ?>">
+                <i class="bi bi-speedometer2 mobile-nav-icon"></i>
+                <span class="mobile-nav-label">Dashboard</span>
+            </a>
+            
+            <!-- Center FAB -->
+            <button class="mobile-nav-fab" id="mobileFabBtn" onclick="toggleFabMenu()">
+                <i class="bi bi-grid"></i>
+            </button>
+            
+            <a href="<?= base_url('/panitia/siswa') ?>" class="mobile-nav-item <?= strpos(uri_string(), 'panitia/siswa') !== false ? 'active' : '' ?>">
+                <i class="bi bi-people mobile-nav-icon"></i>
+                <span class="mobile-nav-label">Siswa</span>
+            </a>
+            
+            <a href="<?= base_url('/profile') ?>" class="mobile-nav-item <?= strpos(uri_string(), 'profile') !== false ? 'active' : '' ?>">
+                <i class="bi bi-person mobile-nav-icon"></i>
+                <span class="mobile-nav-label">Profil</span>
+            </a>
+            <?php elseif (session()->get('role') === 'bendahara'): ?>
+            <a href="<?= base_url('/bendahara/dashboard') ?>" class="mobile-nav-item <?= strpos(uri_string(), 'bendahara/dashboard') !== false ? 'active' : '' ?>">
+                <i class="bi bi-speedometer2 mobile-nav-icon"></i>
+                <span class="mobile-nav-label">Dashboard</span>
+            </a>
+            
+            <!-- Center FAB -->
+            <button class="mobile-nav-fab" id="mobileFabBtn" onclick="toggleFabMenu()">
+                <i class="bi bi-grid"></i>
+            </button>
+            
+            <a href="<?= base_url('/bendahara/pembayaran') ?>" class="mobile-nav-item <?= strpos(uri_string(), 'bendahara/pembayaran') !== false ? 'active' : '' ?>">
+                <i class="bi bi-cash-stack mobile-nav-icon"></i>
+                <span class="mobile-nav-label">Pembayaran</span>
+            </a>
+            
+            <a href="<?= base_url('/profile') ?>" class="mobile-nav-item <?= strpos(uri_string(), 'profile') !== false ? 'active' : '' ?>">
+                <i class="bi bi-person mobile-nav-icon"></i>
+                <span class="mobile-nav-label">Profil</span>
+            </a>
+            <?php endif; ?>
+        </div>
+    </nav>
+    
+    <!-- FAB Menu (Expandable) -->
+    <div class="fab-backdrop" id="fabBackdrop" onclick="toggleFabMenu()"></div>
+    <div class="fab-menu" id="fabMenu">
+        <?php if (session()->get('role') === 'applicant'): ?>
+        <a href="<?= base_url('/registration/wizard') ?>" class="fab-menu-item">
+            <div class="fab-menu-icon"><i class="bi bi-clipboard-check"></i></div>
+            <span>Form Pendaftaran</span>
+        </a>
+        <a href="<?= base_url('/applicant/timeline') ?>" class="fab-menu-item">
+            <div class="fab-menu-icon"><i class="bi bi-clock-history"></i></div>
+            <span>Timeline Status</span>
+        </a>
+        <a href="<?= base_url('/applicant/upload_documents') ?>" class="fab-menu-item">
+            <div class="fab-menu-icon"><i class="bi bi-file-earmark-arrow-up"></i></div>
+            <span>Upload Dokumen</span>
+        </a>
+        <a href="<?= base_url('/auth/logout') ?>" class="fab-menu-item">
+            <div class="fab-menu-icon"><i class="bi bi-box-arrow-right"></i></div>
+            <span>Logout</span>
+        </a>
+        <?php else: ?>
+        <a href="<?= base_url('/'.session()->get('role').'/reports') ?>" class="fab-menu-item">
+            <div class="fab-menu-icon"><i class="bi bi-file-earmark-bar-graph"></i></div>
+            <span>Laporan</span>
+        </a>
+        <a href="<?= base_url('/'.session()->get('role').'/settings') ?>" class="fab-menu-item">
+            <div class="fab-menu-icon"><i class="bi bi-gear"></i></div>
+            <span>Pengaturan</span>
+        </a>
+        <a href="<?= base_url('/auth/logout') ?>" class="fab-menu-item">
+            <div class="fab-menu-icon"><i class="bi bi-box-arrow-right"></i></div>
+            <span>Logout</span>
+        </a>
+        <?php endif; ?>
+    </div>
+    
+    <!-- Mobile Nav Spacer -->
+    <div class="mobile-nav-spacer"></div>
+    
+    <script>
+    // Mobile FAB Menu Toggle
+    function toggleFabMenu() {
+        const fabMenu = document.getElementById('fabMenu');
+        const fabBackdrop = document.getElementById('fabBackdrop');
+        const fabBtn = document.getElementById('mobileFabBtn');
+        
+        fabMenu.classList.toggle('active');
+        fabBackdrop.classList.toggle('active');
+        
+        // Rotate FAB icon
+        if (fabMenu.classList.contains('active')) {
+            fabBtn.innerHTML = '<i class="bi bi-x-lg"></i>';
+        } else {
+            fabBtn.innerHTML = '<?= session()->get('role') === 'applicant' ? '<i class="bi bi-plus-lg"></i>' : '<i class="bi bi-grid"></i>' ?>';
+        }
+    }
+    </script>
+    <?php endif; ?>
     
     <?= $this->renderSection('scripts'); ?>
 </body>

@@ -53,6 +53,18 @@ class SettingModel extends Model
      * @param mixed $default
      * @return mixed
      */
+    public function getSetting($key, $default = null)
+    {
+        return $this->get($key, $default);
+    }
+
+    /**
+     * Get setting value by key
+     *
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     */
     public function get($key, $default = null)
     {
         $setting = $this->where('setting_key', $key)->first();

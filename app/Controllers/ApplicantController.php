@@ -313,29 +313,34 @@ public function upload_documents()
         }
 
         $user_id = session()->get('user_id');
-        $user = new \App\Models\User();
-        $userData = $user->find($user_id);
-
-        // Check if already registered
-        $applicant = $this->applicantModel->getApplicantByUserId($user_id);
-        if ($applicant) {
-            return redirect()->to('/applicant/dashboard');
+        
+        // Get user data
+        $userModel = new \App\Models\User();
+        $userData = $userModel->find($user_id);
+        
+        if (!$userData) {
+            session()->setFlashdata('error', 'Data user tidak ditemukan.');
+            return redirect()->to('/auth/login');
         }
+
+        // Get applicant data if exists
+        $applicantModel = new \App\Models\Applicant();
+        $applicant = $applicantModel->where('user_id', $user_id)->first();
 
         // Get payment status
         $paymentModel = new \App\Models\PaymentModel();
-        $payment = $paymentModel->getPaymentByUserId($user_id);
+        $payment = $paymentModel->where('user_id', $user_id)->first();
 
-        // Check if payment is already confirmed
-        if ($payment && $payment['payment_status'] === 'confirmed') {
-            session()->setFlashdata('success', 'Pembayaran sudah dikonfirmasi. Silakan isi form pendaftaran.');
-            return redirect()->to('/applicant/register');
+        // Check if payment is already confirmed and applicant registered
+        if ($payment && $payment['payment_status'] === 'confirmed' && $applicant) {
+            return redirect()->to('/applicant/dashboard');
         }
 
+        // Handle form submission
         if ($this->request->getMethod() === 'post') {
             $rules = [
                 'bank_name' => 'required',
-                'account_number' => 'required|numeric',
+                'account_number' => 'required',
                 'account_holder' => 'required',
                 'transfer_amount' => 'required|numeric',
                 'transfer_date' => 'required|valid_date[Y-m-d]',
@@ -357,6 +362,7 @@ public function upload_documents()
                     'transfer_date' => $this->request->getPost('transfer_date'),
                     'payment_status' => 'submitted', // Waiting for admin confirmation
                     'registration_fee' => 150000,
+                    'submitted_at' => date('Y-m-d H:i:s'),
                 ];
 
                 // Handle file upload
@@ -369,28 +375,111 @@ public function upload_documents()
 
                 // Logic: UPDATE only if payment exists AND status is pending/rejected
                 // If confirmed, always create NEW payment (support multiple payments)
-                if ($payment && in_array($payment['payment_status'], ['pending', 'rejected'])) {
+                if ($payment && in_array($payment['payment_status'], ['pending', 'rejected', 'submitted'])) {
                     // Update existing pending/rejected payment (re-upload)
                     $paymentModel->update($payment['id'], $paymentData);
-                    $paymentId = $payment['id'];
                 } else {
                     // Create new payment record
-                    // This happens if: no payment exists, or payment already confirmed
-                    $paymentId = $paymentModel->insert($paymentData);
+                    $paymentModel->insert($paymentData);
                 }
 
                 session()->setFlashdata('success', 'Bukti pembayaran berhasil diunggah. Menunggu konfirmasi admin.');
-                return redirect()->to('/applicant/dashboard');
+                return redirect()->to('/applicant/payment');
             } catch (\Exception $e) {
                 session()->setFlashdata('error', 'Error: ' . $e->getMessage());
                 return redirect()->back()->withInput();
             }
         }
 
+        // Prepare user data array
+        $user = [
+            'email' => $userData['email'] ?? '',
+            'name' => $userData['name'] ?? '',
+        ];
+
         return view('applicant/payment', [
-            'user' => $userData,
+            'user' => $user,
             'payment' => $payment,
             'registration_fee' => 150000, // Default registration fee
+        ]);
+    }
+
+    /**
+     * Display visual status timeline
+     * Shows the step-by-step progress of applicant's registration
+     * 
+     * @return mixed
+     */
+    public function timeline()
+    {
+        // Check authentication and role
+        if (!$this->isApplicantAuthenticated()) {
+            return $this->redirectToLogin();
+        }
+
+        $userId = session()->get('user_id');
+        $applicant = $this->applicantService->getApplicantByUserId($userId);
+        
+        if (!$applicant) {
+            session()->setFlashdata('error', 'Data pendaftar tidak ditemukan.');
+            return redirect()->to('/applicant/dashboard');
+        }
+
+        // Get payment data
+        $payment = $this->paymentService->getPaymentByApplicantId($applicant->id);
+
+        // Calculate timeline progress
+        $timelineData = [
+            'registration' => [
+                'status' => 'completed',
+                'date' => $applicant->created_at ?? date('Y-m-d H:i:s'),
+                'user' => session()->get('name'),
+                'registration_number' => $applicant->registration_number ?? 'PPDB-2024-' . str_pad($applicant->id, 5, '0', STR_PAD_LEFT),
+            ],
+            'document_verification' => [
+                'status' => $applicant->status === 'verified' || $applicant->status === 'accepted' ? 'completed' : ($applicant->status === 'pending' ? 'active' : 'pending'),
+                'progress' => $applicant->status === 'pending' ? 65 : ($applicant->status === 'verified' ? 100 : 0),
+                'estimated_time' => '1-2 hari kerja',
+            ],
+            'payment' => [
+                'status' => $payment && $payment->status === 'verified' ? 'completed' : ($payment ? 'active' : 'pending'),
+                'amount' => 250000,
+                'methods' => ['Transfer Bank', 'Virtual Account', 'E-Wallet'],
+                'payment_data' => $payment,
+            ],
+            'payment_verification' => [
+                'status' => $payment && $payment->status === 'verified' ? 'completed' : 'pending',
+                'verified_by' => $payment && $payment->verified_by ? $payment->verified_by : null,
+                'verified_at' => $payment && $payment->verified_at ? $payment->verified_at : null,
+            ],
+            'entrance_test' => [
+                'status' => $applicant->test_status === 'completed' ? 'completed' : ($applicant->test_status === 'scheduled' ? 'active' : 'pending'),
+                'test_date' => $applicant->test_date ?? null,
+                'test_location' => $applicant->test_location ?? 'TBA',
+            ],
+            'announcement' => [
+                'status' => $applicant->status === 'accepted' ? 'completed' : ($applicant->status === 'rejected' ? 'rejected' : 'pending'),
+                'announcement_date' => $applicant->announcement_date ?? null,
+            ],
+        ];
+
+        // Calculate overall progress percentage
+        $completedSteps = 0;
+        $totalSteps = 6;
+        
+        if ($timelineData['registration']['status'] === 'completed') $completedSteps++;
+        if ($timelineData['document_verification']['status'] === 'completed') $completedSteps++;
+        if ($timelineData['payment']['status'] === 'completed') $completedSteps++;
+        if ($timelineData['payment_verification']['status'] === 'completed') $completedSteps++;
+        if ($timelineData['entrance_test']['status'] === 'completed') $completedSteps++;
+        if ($timelineData['announcement']['status'] === 'completed') $completedSteps++;
+
+        $overallProgress = round(($completedSteps / $totalSteps) * 100);
+
+        return view('applicant/timeline', [
+            'applicant' => $applicant,
+            'timeline' => $timelineData,
+            'progress' => $overallProgress,
         ]);
     }
 }

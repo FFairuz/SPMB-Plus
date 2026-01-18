@@ -108,6 +108,38 @@ class AdminController extends BaseController
     }
 
     /**
+     * Command Center - Modern Dashboard v2.0
+     * 
+     * @return mixed
+     */
+    public function commandCenter()
+    {
+        $this->requireAdmin();
+
+        $stats = $this->adminService->getDashboardStats();
+        
+        // Quota statistics for active academic year
+        $academicYearModel = new \App\Models\AcademicYear();
+        $quotaModel = new \App\Models\MajorQuota();
+        
+        $activeYear = $academicYearModel->getActiveYear();
+        $quotaStats = [];
+        
+        if ($activeYear) {
+            $quotaStats = $quotaModel->getQuotaStats($activeYear['tahun_ajaran']);
+        }
+        
+        $data = [
+            'title' => 'Command Center - Dashboard Admin',
+            'stats' => $stats,
+            'activeYear' => $activeYear,
+            'quotaStats' => $quotaStats,
+        ];
+
+        return view('admin/dashboard_v2', $data);
+    }
+
+    /**
      * Tampilkan daftar applicants dengan filter dan pagination
      * 
      * @param string|null $status Filter by status (optional)
